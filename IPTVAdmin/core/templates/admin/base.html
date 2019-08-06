@@ -1,0 +1,39 @@
+{% extends 'admin/base.html' %}
+{% load staticfiles %}
+
+{% block extrahead %}
+  <link rel="shortcut icon" type="image/icon" href="{% static 'img/favicon.ico' %}"/>
+{% endblock %}
+
+{% block branding %}
+  <h1 id="site-name">
+    <a href="{% url 'admin:index' %}">
+      <img src="{% static 'img/logo.png' %}" height="40px" />
+      <br>
+      {{ site_title|default:_('Django site admin') }}
+    </a>
+  </h1>
+{% endblock %}
+
+{% block footer %}
+
+  <div id="footer">
+    <footer class="footer">
+      <div class="container-fluid">
+        {% block footer_content %}
+        <div class="row">
+
+          <div class="col-xs-12 col-sm-6 text-sm-center footer-copyright">
+            {% block copyright %}
+              Copyright &copy;
+              <span class="hidden-md-down"></span>{% now "Y" %}
+            {% endblock %}
+          </div>
+
+        </div>
+        {% endblock %}
+      </div>
+    </footer>
+  </div>
+
+{% endblock %}

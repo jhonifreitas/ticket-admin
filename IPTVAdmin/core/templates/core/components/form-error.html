@@ -1,0 +1,10 @@
+{% if form.non_field_errors %}
+  <div class="box-alerts">
+    {% for error in form.non_field_errors %}
+      <div class="alert default bg-danger">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span class="text-white" aria-hidden="true">&times;</span></button>
+        <p class="text-white mb-0">{{ error }}</p>
+      </div>
+    {% endfor %}
+  </div>
+{% endif %}

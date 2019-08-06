@@ -1,0 +1,11 @@
+{% load widget_tweaks %}
+
+<div class="form-group">
+  <p class="mb-1">{{ field.label }}</p>
+  {% for radio in field %}
+    <div class="custom-control custom-radio">
+      {{ radio.tag }}
+      <label for="{{ radio.id_for_label }}" class="custom-control-label">{{ radio.choice_label }}</label>
+    </div>
+  {% endfor %}
+</div>

@@ -1,0 +1,18 @@
+{% load widget_tweaks %}
+
+<div class="form-group custom-control custom-checkbox">
+  {% with class=class|default:"" %}
+
+    {% if field.errors %}
+      {% render_field field|add_class:class class="custom-control-input is-invalid" %}
+    {% else %}
+      {% render_field field|add_class:class class="custom-control-input" %}
+    {% endif %}
+    <label for="{{ field.id_for_label }}" class="custom-control-label">
+      {{ field.label }}
+    </label>
+
+    {% include "core/components/field-help.html" with field=field %}
+    {% include "core/components/field-error.html" with field=field %}
+  {% endwith%}
+</div>
