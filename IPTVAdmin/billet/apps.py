@@ -2,4 +2,5 @@ from django.apps import AppConfig
 
 
 class BilletConfig(AppConfig):
-    name = 'billet'
+    name = 'IPTVAdmin.billet'
+    verbose_name = 'Boleto'

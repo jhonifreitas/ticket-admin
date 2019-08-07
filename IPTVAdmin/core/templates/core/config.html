@@ -11,20 +11,17 @@
           <h3 class="box-title">Configuração</h3>
         </div>
         <div class="box-body">
-          <div class="mb-4">
-            {% if form.image.value %}
-              <div class="row justify-content-center">
-                <div class="col-6 text-center">
-                  <img src="{{ form.image.value.url }}" class="img-fluid" alt="">
-                  <a href="#" data-toggle="modal" data-target="#confirm-image-delete" class="btn btn-danger btn-block" title="Deletar"><i class="fas fa-trash"></i></a>
-                </div>
-              </div>
-            {% else %}
-              <div id="dropzone-image" class="dropzone"></div>
-            {% endif %}
+          {% include 'core/components/field.html' with field=form.token %}
+          {% include 'core/components/field.html' with field=form.email %}
+          {% include 'core/components/field.html' with field=form.amount_billet %}
+          <div class="row">
+            <div class="col-md-6">
+              {% include 'core/components/field.html' with field=form.instructions_billet %}
+            </div>
+            <div class="col-md-6">
+              {% include 'core/components/field.html' with field=form.description_billet %}
+            </div>
           </div>
-          {% include 'core/components/field.html' with field=form.datetime class='datetimepicker' %}
-          {% include 'core/components/field.html' with field=form.description %}
         </div>
       </div>
       <button type="submit" class="btn btn-primary flat-right rounded-circle"><i class="fas fa-save"></i></button>
@@ -33,73 +30,4 @@
 {% endblock %}
 {% block modal %}
   {% include 'core/components/form-error.html' with form=form %}
-  {% url 'core:delete-image-config' as url_image_delete %}
-  {% include 'core/components/modal_confirm.html' with uuid='image-delete' url=url_image_delete %}
-{% endblock %}
-{% block css %}
-  <link href="{% static 'plugins/dropzone/css/dropzone.min.css' %}" rel="stylesheet">
-  <link href="{% static 'plugins/datetimepicker/css/datetimepicker.min.css' %}" rel="stylesheet">
-  <link href="{% static 'plugins/summernote/summernote-bs4.css' %}" rel="stylesheet">
-{% endblock %}
-{% block js %}
-  <script src="{% static 'plugins/dropzone/js/dropzone.min.js' %}"></script>
-  <script src="{% static 'plugins/moment/moment-with-locales.min.js' %}"></script>
-  <script src="{% static 'plugins/locale/pt-br.js' %}"></script>
-  <script src="{% static 'plugins/datetimepicker/js/datetimepicker.js' %}"></script>
-  <script src="{% static 'plugins/summernote/summernote-bs4.min.js' %}"></script>
-  <script type="text/javascript">
-    Dropzone.autoDiscover = false;
-    $(function(){
-      // SUMMERNOTE
-      $('form #id_description').summernote({
-        height: 200
-      });
-
-      // DATETIMEPICKER
-      $('.datetimepicker').datetimepicker({
-        locale: 'pt-br',
-        format: 'DD/MM/YYYY HH:mm',
-        viewMode: 'months',
-      });
-
-      $('#dropzone-image').dropzone({
-        url: './',
-        maxFiles: 1,
-        uploadMultiple: false,
-        autoProcessQueue: false,
-        paramName: function(){return 'image'},
-        acceptedFiles: 'image/*',
-        dictDefaultMessage: 'Arraste a sua imagem para cá<br>ou<br>clique para carregar a imagem!',
-        dictMaxFilesExceeded: 'Você não pode carregar mais arquivos.',
-        init: function(){
-          dz = this;
-          
-          dz.on('sending', function(file, xhr, formData) {
-            $.each($('form').serializeArray(), function(key, el) {
-              formData.append(el.name, el.value);
-            });
-          });
-          dz.on('success', function(file, data, err) {
-            location.reload(true);
-          });
-          dz.on('error', function(file, data, err) {
-            $('.form').html(data['html'])
-          });
-
-          $('form [type="submit"]').click(function(e) {
-            can_submit = true;
-            $('form [required]').each(function(index, value){
-              if(!$(value).val()){
-                can_submit = false;
-              }
-            })
-            if(dz.files.length && can_submit){
-              e.preventDefault();
-              dz.processQueue();
-            }
-          });
-        }
-      });
-    })
-  </script>
 {% endblock %}

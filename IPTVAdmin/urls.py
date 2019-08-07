@@ -26,8 +26,11 @@ urlpatterns = [
     # Home
     path('', include('IPTVAdmin.core.urls', namespace='core')),
 
-    # Boletos
+    # Usuarios
     path('usuario/', include('IPTVAdmin.custom_profile.urls', namespace='profile')),
+
+    # Boletos
+    path('boleto/', include('IPTVAdmin.billet.urls', namespace='billet')),
 ]
 
 if settings.DEFAULT_FILE_STORAGE == 'django.core.files.storage.FileSystemStorage':

@@ -17,13 +17,10 @@ class ProfileListView(views.BaseListView):
     def get_queryset(self):
         object_list = super().get_queryset()
         text_filter = self.request.GET.get('q')
-        if hasattr(self.request.user, 'dealer'):
-            object_list = object_list.filter(dealer=self.request.user.dealer)
         if text_filter:
             object_list = object_list.filter(
-                Q(user__username__icontains=text_filter) |
-                Q(user__first_name__icontains=text_filter) |
-                Q(user__last_name__icontains=text_filter))
+                Q(name__icontains=text_filter) |
+                Q(phone__icontains=text_filter))
         return object_list
 
 
@@ -37,8 +34,7 @@ class ProfileCreateView(views.BaseCreateView):
     permission_required = ['custom_profile.add_profile']
 
     def form_valid(self, form):
-        if hasattr(self.request.user, 'dealer'):
-            form.instance.dealer = self.request.user.dealer
+        form.instance.config = self.request.user.config
         return super().form_valid(form)
 
 
@@ -51,14 +47,14 @@ class ProfileUpdateView(views.BaseUpdateView):
     success_message = 'Usuário salvo!'
     permission_required = ['custom_profile.update_profile']
 
-    def get_form(self):
-        form = super().get_form()
-        form.fields['password'].required = False
-        form.fields['password1'].required = False
-        form.fields['first_name'].initial = form.instance.user.first_name
-        form.fields['last_name'].initial = form.instance.user.last_name
-        form.fields['username'].initial = form.instance.user.username
-        return form
+    # def get_form(self):
+    #     form = super().get_form()
+    #     form.fields['password'].required = False
+    #     form.fields['password1'].required = False
+    #     form.fields['first_name'].initial = form.instance.user.first_name
+    #     form.fields['last_name'].initial = form.instance.user.last_name
+    #     form.fields['username'].initial = form.instance.user.username
+    #     return form
 
 
 class ProfileDeleteView(views.BaseDeleteView):

@@ -57,6 +57,7 @@ EXTRA_APPS = [
 
 PROJECT_APPS = [
     'IPTVAdmin.custom_profile.apps.CustomProfileConfig',
+    'IPTVAdmin.billet.apps.BilletConfig',
 ]
 
 INSTALLED_APPS += EXTRA_APPS
@@ -181,3 +182,7 @@ EMAIL_HOST_USER = config('EMAIL_HOST_USER')
 EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD')
 DEFAULT_FROM_EMAIL = config('DEFAULT_FROM_EMAIL')
 SERVER_EMAIL = config('SERVER_EMAIL')
+
+
+# PAGSEGURO
+PAGSEGURO_BOLETO_URL = config('PAGSEGURO_BOLETO_URL')

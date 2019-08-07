@@ -10,7 +10,7 @@
     <div class="navbar-custom-menu">
       <ul class="nav navbar-nav">
         <li>
-          <a href="#" class="py-3 px-4" title="Sair">
+          <a href="{% url 'profile:logout' %}" class="py-3 px-4" title="Sair">
             <i class="fas fa-power-off"></i>
           </a>
         </li>
@@ -31,6 +31,8 @@
       <li class="header text-uppercase text-white">Menu</li>
       <li><a href="{% url 'core:home' %}"><i class="fas fa-home mr-2"></i><span>Início</span></a></li>
       <li><a href="{% url 'profile:list' %}"><i class="fas fa-users mr-2"></i><span>Usuários</span></a></li>
+      <li><a href="{% url 'billet:list' %}"><i class="fas fa-file mr-2"></i><span>Boletos</span></a></li>
+      <li><a href="{% url 'core:config' %}"><i class="fas fa-cogs mr-2"></i><span>Configurações</span></a></li>
     </ul>
   </section>
 </aside>

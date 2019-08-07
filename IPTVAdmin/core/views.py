@@ -12,6 +12,8 @@ from django.contrib.auth.mixins import PermissionRequiredMixin
 from django.shortcuts import get_object_or_404, redirect, render
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 
+from IPTVAdmin.core import models, forms
+from IPTVAdmin.billet.models import Billet
 from IPTVAdmin.custom_profile.models import Profile
 
 
@@ -22,6 +24,12 @@ class BaseView(PermissionRequiredMixin, SuccessMessageMixin, View):
 
     @method_decorator(login_required)
     def dispatch(self, request, *args, **kwargs):
+        url_allowed = [
+            reverse_lazy('core:config'),
+        ]
+        if not request.get_full_path() in url_allowed and not hasattr(request.user, 'config'):
+            messages.warning(request, 'Configure sua conta antes de continuar!')
+            return redirect(reverse_lazy('core:config'))
         return super().dispatch(request, *args, **kwargs)
 
 
@@ -59,8 +67,45 @@ class HomeView(BaseView):
 
     def get_context_data(self):
         context = {
+            'profiles': Profile.objects_all.count(),
+            'billets_pending': Billet.objects.filter(status=Billet.PENDING).count()
         }
         return context
 
     def get(self, request):
         return render(request, self.template_name, self.get_context_data())
+
+
+class ConfigView(BaseView):
+
+    model = models.Config
+    form_class = forms.ConfigForm
+    template_name = 'core/config.html'
+    success_message = 'Configuração salva!'
+    success_url = reverse_lazy('core:config')
+
+    def get_object(self):
+        return self.model.objects.first()
+
+    def get_context_data(self):
+        context = {'form': self.form_class(instance=self.get_object())}
+        return context
+
+    def get(self, request):
+        return render(request, self.template_name, self.get_context_data())
+
+    def post(self, request):
+        context = self.get_context_data()
+        data = request.POST.copy()
+        data['user'] = request.user.pk
+        form = self.form_class(instance=self.get_object(), data=data)
+
+        if form.is_valid():
+            form.save()
+            request.user.email = form.cleaned_data.get('email')
+            request.user.save()
+            messages.success(request, self.success_message)
+            return redirect(self.success_url)
+        context['form'] = form
+        return render(request, self.template_name, context=context)
+    

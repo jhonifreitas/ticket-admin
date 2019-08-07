@@ -1,9 +1,11 @@
 from uuid import uuid4
 
+from auditlog.registry import auditlog
 from auditlog.models import AuditlogHistoryField
 
 from django.db import models
 from django.utils import timezone
+from django.contrib.auth.models import User
 from django.utils.translation import ugettext_lazy as _
 
 from IPTVAdmin.core.manager import Manager
@@ -30,3 +32,20 @@ class AbstractBaseModel(models.Model):
 
     def __str__(self):
         return str(self.pk)
+
+
+class Config(AbstractBaseModel):
+
+    class Meta:
+        verbose_name = 'Configuração'
+        verbose_name_plural = 'Configuração'
+
+    user = models.OneToOneField(User, verbose_name='Usuário', on_delete=models.CASCADE, related_name='config')
+    token = models.CharField(verbose_name='Token', max_length=255)
+    instructions_billet = models.CharField(verbose_name='Instruções Geral do Boleto', max_length=100)
+    description_billet = models.CharField(verbose_name='Descrição Geral do Boleto', max_length=100)
+    amount_billet = models.DecimalField(verbose_name='Valor Geral do Boleto', max_digits=15, decimal_places=2)
+
+
+auditlog.register(User)
+auditlog.register(Config)

@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+
+{% block content %}
+  <section class="content">
+    <form method="POST" class="position-relative">
+      {% csrf_token %}
+      <div class="box box-primary border-0 rounded-0 shadow-1">
+        <div class="box-header">
+          <i class="fas fa-edit mr-2"></i>
+          <h3 class="box-title">Formulário</h3>
+        </div>
+        <div class="box-body">
+          {% include 'core/components/field.html' with field=form.profile class='custom-select' %}
+          <div class="row">
+            <div class="col-md-6">
+              {% include 'core/components/field.html' with field=form.firstDueDate class='datetimepicker' %}
+            </div>
+            <div class="col-md-6">
+              {% include 'core/components/field.html' with field=form.numberOfPayments %}
+            </div>
+            <div class="col-md-6">
+                {% include 'core/components/field.html' with field=form.instructions %}
+            </div>
+            <div class="col-md-6">
+              {% include 'core/components/field.html' with field=form.description %}
+            </div>
+            <div class="col-md-6">
+              {% include 'core/components/field.html' with field=form.amount class='mask-money' %}
+            </div>
+          </div>
+        </div>
+      </div>
+      <button type="submit" class="btn btn-primary flat-right rounded-circle"><i class="fas fa-save"></i></button>
+    </form>
+  </section>
+
+{% endblock %}
+{% block modal %}
+  {% include 'core/components/form-error.html' with form=form %}
+{% endblock %}
+{% block css %}
+  <link href="{% static 'plugins/datetimepicker/css/datetimepicker.min.css' %}" rel="stylesheet">
+{% endblock %}
+{% block js %}
+  <script src="{% static 'plugins/moment/moment-with-locales.min.js' %}"></script>
+  <script src="{% static 'plugins/locale/pt-br.js' %}"></script>
+  <script src="{% static 'plugins/datetimepicker/js/datetimepicker.js' %}"></script>
+  
+  <script type="text/javascript">
+    $(function(){
+      $('.mask-phone').mask('(99) 99999-9999');
+      $('.mask-money').mask('#.##0,00', {reverse: true});
+      
+      // DATETIMEPICKER
+      $('.datetimepicker').datetimepicker({
+        locale: 'pt-br',
+        format: 'DD/MM/YYYY',
+        minDate: moment(new Date()).add(1,'days')
+      });
+    })
+  </script>
+{% endblock %}

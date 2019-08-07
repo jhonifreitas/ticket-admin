@@ -7,5 +7,5 @@ from IPTVAdmin.custom_profile import models
 class ProfileAdmin(admin.ModelAdmin):
 
     exclude = ['deleted_at']
-    list_display = ['id', 'user', 'updated_at', 'created_at']
-    list_display_links = ['id', 'user']
+    list_display = ['id', 'config', 'updated_at', 'created_at']
+    list_display_links = ['id', 'config']

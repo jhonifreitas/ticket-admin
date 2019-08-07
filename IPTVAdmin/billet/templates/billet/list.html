@@ -8,7 +8,7 @@
         <div class="row align-items-center">
           <div class="col-md-8">
             <i class="fas fa-list mr-2"></i>
-            <h3 class="box-title">Usuários</h3>
+            <h3 class="box-title">Boletos</h3>
           </div>
           <div class="col-md-4">
             <form class="pb-0" style="min-height: auto;">
@@ -27,20 +27,17 @@
           <table class="table table-striped">
             <thead>
               <tr>
-                <th class="border-0 text-left pl-4">Nome</th>
-                <th class="border-0">Telefone</th>
+                <th class="border-0 text-left pl-4">Perfil</th>
+                <th class="border-0">Vencimento</th>
+                <th class="border-0">Status</th>
                 <th class="border-0" width="300">Ações</th>
               </tr>
             </thead>
             <tbody>
               {% for object in object_list %}
                 <tr>
-                  <td class="align-middle text-left pl-4">{{ object.name }}</td>
-                  <td class="align-middle">{{ object.phone }}</td>
                   <td>
-                    <a href="{% url 'billet:create' %}?profile={{ object.uuid }}" class="btn btn-outline-info" title="Gerar Boleto"><i class="fas fa-file"></i></a>
-                    
-                    <a href="{% url 'profile:update' object.pk %}" class="btn btn-outline-success" title="Editar"><i class="fas fa-edit"></i></a>
+                    <a href="{% url 'billet:update' object.pk %}" class="btn btn-outline-success" title="Editar"><i class="fas fa-edit"></i></a>
                     <button type="button" data-toggle="modal" data-target="#confirm-{{ object.uuid }}" class="btn btn-outline-danger" title="Deletar"><i class="fas fa-trash"></i></button>
                   </td>
                 </tr>
@@ -58,7 +55,7 @@
       </div>
     </div>
   </section>
-  <a href="{% url 'profile:create' %}" class="btn btn-primary flat-right rounded-circle"><i class="fas fa-plus"></i></a>
+  <a href="{% url 'billet:create' %}" class="btn btn-primary flat-right rounded-circle"><i class="fas fa-plus"></i></a>
 {% endblock %}
 {% block modal %}
   {% for object in object_list %}
