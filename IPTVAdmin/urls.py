@@ -15,9 +15,13 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.conf import settings
-from django.urls import path
-from django.urls import include
+from django.urls import path, include
 from django.conf.urls.static import static
+
+# Admin customization.
+admin.site.site_header = 'Painel IPTV'
+admin.site.site_title = 'Painel IPTV'
+admin.site.index_title = 'Administração'
 
 
 urlpatterns = [

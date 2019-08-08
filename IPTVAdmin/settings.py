@@ -39,6 +39,7 @@ SECURE_SSL_REDIRECT = config('SECURE_SSL_REDIRECT', default=False, cast=bool)
 
 INSTALLED_APPS = [
     'IPTVAdmin.core.apps.CoreConfig',
+    'IPTVAdmin.core.apps.SuitConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',

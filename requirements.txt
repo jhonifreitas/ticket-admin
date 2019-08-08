@@ -15,6 +15,9 @@ boto3
 requests
 pytz
 
+# Django Admin
+https://github.com/darklow/django-suit/tarball/v2
+
 # Auditlog
 git+https://github.com/cosmunsoftwares/django-auditlog.git
 
