@@ -1,7 +1,7 @@
 <div class="box-alerts">
   {% if messages %}
     {% for message in messages %}
-      <div class="callout{% if message.tags %} callout-{% if message.tags == 'error' %}danger{% else %}{{ message.tags }}{% endif %}{% endif %} open">
+      <div class="callout{% if message.tags %} callout-{% if message.tags == 'error' %}danger{% else %}{{ message.tags }}{% endif %}{% endif %} open" style="display: none;">
         <p class="text-white mb-0">{{ message|safe }}</p>
       </div>
     {% endfor %}

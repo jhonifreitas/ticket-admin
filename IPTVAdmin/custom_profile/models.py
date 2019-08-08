@@ -18,7 +18,7 @@ class Profile(AbstractBaseModel):
     config = models.ForeignKey(Config, verbose_name='Configuração', on_delete=models.CASCADE, related_name='profiles')
     name = models.CharField(verbose_name='Nome', max_length=255)
     phone = models.CharField(verbose_name='Telefone', max_length=11)
-    email = models.EmailField(verbose_name='Email', null=True, blank=True)
+    email = models.EmailField(verbose_name='Email')
     
     def __str__(self):
         return self.name

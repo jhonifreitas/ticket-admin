@@ -35,7 +35,7 @@ class Billet(AbstractBaseModel):
 
     reference = models.CharField(verbose_name='Referencia', max_length=200)
     firstDueDate = models.DateField(verbose_name='Data de vencimento')
-    numberOfPayments = models.PositiveIntegerField(verbose_name='Parcelas', validators=[
+    numberOfPayments = models.PositiveIntegerField(verbose_name='Períodos mensais', validators=[
         MinValueValidator(1), MaxValueValidator(12)], default=1)
     instructions = models.CharField(verbose_name='Instruções', max_length=100)
     description = models.CharField(verbose_name='Descrição', max_length=100)

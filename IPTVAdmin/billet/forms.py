@@ -9,7 +9,7 @@ class BilletForm(forms.ModelForm):
         model = models.Billet
         exclude = ['code', 'paymentLink', 'barcode', 'dueDate', 'reference', 'status', 'deleted_at']
 
-    amount = forms.CharField(label='Valor')
+    amount = forms.CharField(label='Valor', max_length=10)
 
     def clean_amount(self):
         money = self.cleaned_data.get('amount')

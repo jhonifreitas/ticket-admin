@@ -42,9 +42,9 @@ class Config(AbstractBaseModel):
 
     user = models.OneToOneField(User, verbose_name='Usuário', on_delete=models.CASCADE, related_name='config')
     token = models.CharField(verbose_name='Token', max_length=255)
-    instructions_billet = models.CharField(verbose_name='Instruções Geral do Boleto', max_length=100)
-    description_billet = models.CharField(verbose_name='Descrição Geral do Boleto', max_length=100)
-    amount_billet = models.DecimalField(verbose_name='Valor Geral do Boleto', max_digits=15, decimal_places=2)
+    instructions_billet = models.CharField(verbose_name='Instruções', max_length=100)
+    description_billet = models.CharField(verbose_name='Descrição', max_length=100)
+    amount_billet = models.DecimalField(verbose_name='Valor', max_digits=15, decimal_places=2)
 
 
 auditlog.register(User)

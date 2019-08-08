@@ -36,7 +36,7 @@
               {% for object in object_list %}
                 <tr>
                   <td class="align-middle text-left pl-4">{{ object.name }}</td>
-                  <td class="align-middle">{{ object.phone }}</td>
+                  <td class="align-middle">{{ object.phone|mask_phone }}</td>
                   <td>
                     <a href="{% url 'billet:create' %}?profile={{ object.uuid }}" class="btn btn-outline-info" title="Gerar Boleto"><i class="fas fa-file"></i></a>
                     

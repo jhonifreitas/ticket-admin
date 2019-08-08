@@ -76,10 +76,15 @@ class BilletCreateView(views.BaseCreateView):
             }
         }
         response = requests.post(url, data=json.dumps(data), headers={'Content-Type': 'application/json'})
+        result_json = response.json()
         if response.ok:
             from IPython import embed; embed()
             return super().form_valid(form)
-        for err in response.json().get('errors'):
-            messages.error(self.request, err.get('message'))
-            return render(self.request, self.template_name, self.get_context_data(form=self.get_form()))
+        
+        if result_json.get('errors'):
+            for err in result_json.get('errors'):
+                messages.error(self.request, err.get('message'))
+        elif result_json.get('error'):
+            messages.error(self.request, result_json.get('message'))
+
         return self.form_invalid(form)
