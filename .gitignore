@@ -110,3 +110,4 @@ venv.bak/
 
 # VSCODE
 .vscode/*
+.DS_Store

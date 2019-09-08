@@ -1,7 +1,8 @@
 import json
 from datetime import datetime
-from django.db.models import Sum
+from django.db.models import Q, Sum
 
+from IPTVAdmin.billet import models
 from IPTVAdmin.core.manager import Manager
 
 
@@ -11,6 +12,7 @@ class BilletManager(Manager):
 
     def get_billing(self):
         object_list = self.filter(
+            Q(status=models.Billet.PAID) | Q(status=models.Billet.DEBITED),
             dueDate__year=datetime.now().year
         ).values('dueDate__month').annotate(total=Sum('amount')).order_by()
         result = []

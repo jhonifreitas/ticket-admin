@@ -10,7 +10,7 @@ class AuditlogCustomConfig(AuditlogConfig):
 
 class CoreConfig(AppConfig):
     name = 'IPTVAdmin.core'
-    verbose_name = 'IPTV Admin'
+    verbose_name = 'Geral'
 
 
 class SuitConfig(DjangoSuitConfig):

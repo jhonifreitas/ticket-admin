@@ -38,13 +38,16 @@ class Config(AbstractBaseModel):
 
     class Meta:
         verbose_name = 'Configuração'
-        verbose_name_plural = 'Configuração'
+        verbose_name_plural = 'Configurações'
 
     user = models.OneToOneField(User, verbose_name='Usuário', on_delete=models.CASCADE, related_name='config')
     token = models.CharField(verbose_name='Token', max_length=255)
     instructions_billet = models.CharField(verbose_name='Instruções', max_length=100)
     description_billet = models.CharField(verbose_name='Descrição', max_length=100)
     amount_billet = models.DecimalField(verbose_name='Valor', max_digits=15, decimal_places=2)
+
+    def __str__(self):
+        return self.user.username
 
 
 auditlog.register(User)
