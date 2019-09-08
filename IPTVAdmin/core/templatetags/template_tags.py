@@ -1,17 +1,19 @@
 from django import template
 
+from IPTVAdmin.billet.models import Billet
+
 register = template.Library()
 
 
 @register.filter('get_color_status')
 def get_color_status(value):
     color = 'dark'
-    # if Indication.PENDING == value:
-    #     color = 'warning'
-    # elif Indication.NOT_ACTIVE == value:
-    #     color = 'danger'
-    # elif Indication.ACTIVE == value:
-    #     color = 'success'
+    if Billet.WAITING == value:
+        color = 'warning'
+    elif Billet.CANCELED == value:
+        color = 'danger'
+    elif Billet.DEBITED == value:
+        color = 'success'
     return color
 
 

@@ -66,9 +66,10 @@ class HomeView(BaseView):
     def get_context_data(self):
         context = {
             'profiles': Profile.objects_all.count(),
-            'billets_pending': Billet.objects.filter(status=Billet.PENDING).count(),
-            'billets_approveds': Billet.objects.filter(status=Billet.APPROVED).count(),
-            'billets_recuseds': Billet.objects.filter(status=Billet.RECUSED).count()
+            'billets_wainting': Billet.objects.filter(status=Billet.WAITING).count(),
+            'billets_debited': Billet.objects.filter(status=Billet.DEBITED).count(),
+            'billets_canceled': Billet.objects.filter(status=Billet.CANCELED).count(),
+            'billing': Billet.objects.get_billing()
         }
         return context
 

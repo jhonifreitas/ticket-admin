@@ -26,9 +26,9 @@ class BilletListView(views.BaseListView):
         text_filter = self.request.GET.get('q')
         if text_filter:
             object_list = object_list.filter(
-                Q(user__username__icontains=text_filter) |
-                Q(user__first_name__icontains=text_filter) |
-                Q(user__last_name__icontains=text_filter))
+                Q(profile__name__icontains=text_filter) |
+                Q(profile__email__icontains=text_filter) |
+                Q(profile__phone__icontains=text_filter))
         return object_list
 
 

@@ -3,6 +3,7 @@ from auditlog.registry import auditlog
 from django.db import models
 from django.core.validators import MinValueValidator, MaxValueValidator
 
+from IPTVAdmin.billet.manager import BilletManager
 from IPTVAdmin.core.models import AbstractBaseModel
 from IPTVAdmin.custom_profile.models import Profile
 
@@ -16,6 +17,8 @@ class Billet(AbstractBaseModel):
         permissions = [
             ('list_billet', 'Pode Listar Boletos'),
         ]
+
+    objects = BilletManager()
 
     WAITING = '1'
     IN_ANALYSIS = '2'
