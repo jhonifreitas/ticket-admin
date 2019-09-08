@@ -65,11 +65,14 @@ class HomeView(BaseView):
 
     def get_context_data(self):
         context = {
-            'profiles': Profile.objects_all.count(),
-            'billets_wainting': Billet.objects.filter(status=Billet.WAITING).count(),
-            'billets_debited': Billet.objects.filter(status=Billet.DEBITED).count(),
-            'billets_canceled': Billet.objects.filter(status=Billet.CANCELED).count(),
-            'billing': Billet.objects.get_billing()
+            'profiles': Profile.objects.filter(config=self.request.user.config).count(),
+            'billets_wainting': Billet.objects.filter(
+                profile__config=self.request.user.config, status=Billet.WAITING).count(),
+            'billets_debited': Billet.objects.filter(
+                profile__config=self.request.user.config, status=Billet.DEBITED).count(),
+            'billets_canceled': Billet.objects.filter(
+                profile__config=self.request.user.config, status=Billet.CANCELED).count(),
+            'billing': Billet.objects.get_billing(self.request.user.config)
         }
         return context
 
@@ -86,7 +89,7 @@ class ConfigView(BaseView):
     success_url = reverse_lazy('core:config')
 
     def get_object(self):
-        return self.model.objects.first()
+        return self.model.objects.filter(user=self.request.user).first()
 
     def get_context_data(self):
         context = {'form': self.form_class(instance=self.get_object())}

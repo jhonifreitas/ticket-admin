@@ -13,7 +13,7 @@ class ProfileListView(views.BaseListView):
     permission_required = ['custom_profile.list_profile']
 
     def get_queryset(self):
-        object_list = super().get_queryset()
+        object_list = super().get_queryset().filter(config=self.request.user.config)
         text_filter = self.request.GET.get('q')
         if text_filter:
             object_list = object_list.filter(

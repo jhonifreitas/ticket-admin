@@ -22,7 +22,7 @@ class BilletListView(views.BaseListView):
         return context
 
     def get_queryset(self):
-        object_list = super().get_queryset()
+        object_list = super().get_queryset().filter(profile__config=self.request.user.config)
         text_filter = self.request.GET.get('q')
         if text_filter:
             object_list = object_list.filter(
