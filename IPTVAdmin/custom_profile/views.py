@@ -1,7 +1,5 @@
 from django.db.models import Q
-from django.contrib import messages
 from django.urls import reverse_lazy
-from django.shortcuts import get_object_or_404, redirect
 
 from IPTVAdmin.core import views
 from IPTVAdmin.custom_profile import models, forms

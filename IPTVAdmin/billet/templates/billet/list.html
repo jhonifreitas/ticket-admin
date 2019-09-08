@@ -1,8 +1,36 @@
 {% extends "base.html" %}
-{% load template_tags %}
+{% load staticfiles template_tags %}
 
 {% block content %}
   <section class="content">
+    <div class="box box-primary border-0 rounded-0 shadow-1 {% if not form_import.initial_date.value %}collapsed-box{% endif %}">
+      <div class="box-header">
+        <i class="fas fas fa-file-download mr-2"></i>
+        <h3 class="box-title">Importar</h3>
+        <div class="box-tools">
+          <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-plus"></i></button>
+        </div>
+      </div>
+      <form action="{% url 'billet:import' %}" method="POST" class="box-body" style="min-height: auto; padding-bottom: 0;{% if not form_import.initial_date.value %}display: none;{% endif %}">
+        {% csrf_token %}
+        <div class="row">
+          <div class="col-md-5">
+            {% include 'core/components/field.html' with field=form_import.initial_date %}
+          </div>
+          <div class="col-md-5">
+            {% include 'core/components/field.html' with field=form_import.final_date %}
+          </div>
+          <div class="col-md-2">
+            <label></label>
+            <button type="submit" class="btn btn-primary btn-lg btn-block">
+              <i class="fas fa-circle-notch fa-spin" style="display: none;"></i>
+              <span>Importar</span>
+            </button>
+          </div>
+        </div>
+      </form>
+    </div>
+
     <div class="box box-primary border-0 rounded-0 shadow-1">
       <div class="box-header">
         <div class="row align-items-center">
@@ -36,9 +64,11 @@
             <tbody>
               {% for object in object_list %}
                 <tr>
+                  <td class="text-left pl-4">{{ object.profile }}</td>
+                  <td>{{ object.dueDate | default:'Sem vencimento' }}</td>
+                  <td>{{ object.get_status_display }}</td>
                   <td>
-                    <a href="{% url 'billet:update' object.pk %}" class="btn btn-outline-success" title="Editar"><i class="fas fa-edit"></i></a>
-                    <button type="button" data-toggle="modal" data-target="#confirm-{{ object.uuid }}" class="btn btn-outline-danger" title="Deletar"><i class="fas fa-trash"></i></button>
+                    <a href="{{ object.paymentLink }}" class="btn btn-outline-primary" title="Boleto" target="_blank"><i class="fas fa-file"></i></a>
                   </td>
                 </tr>
               {% empty %}
@@ -58,9 +88,33 @@
   <a href="{% url 'billet:create' %}" class="btn btn-primary flat-right rounded-circle"><i class="fas fa-plus"></i></a>
 {% endblock %}
 {% block modal %}
-  {% for object in object_list %}
-    {% url 'profile:delete' object.pk as url_delete %}
+  {% include 'core/components/form-error.html' with form=form_import %}
+{% endblock %}
+{% block css %}
+  <link href="{% static 'plugins/datetimepicker/css/datetimepicker.min.css' %}" rel="stylesheet">
+{% endblock %}
+{% block js %}
+  <script src="{% static 'plugins/moment/moment-with-locales.min.js' %}"></script>
+  <script src="{% static 'plugins/locale/pt-br.js' %}"></script>
+  <script src="{% static 'plugins/datetimepicker/js/datetimepicker.js' %}"></script>
+  <script>
+    $(function(){
+      $('[name="initial_date"]').datetimepicker({
+        locale: 'pt-br',
+        format: 'DD/MM/YYYY',
+        maxDate: moment(new Date()).subtract(1, 'days')
+      });
+      $('[name="final_date"]').datetimepicker({
+        locale: 'pt-br',
+        format: 'DD/MM/YYYY',
+        maxDate: new Date()
+      });
 
-    {% include 'core/components/modal_confirm.html' with uuid=object.uuid url=url_delete %}
-  {% endfor %}
+      $('form').submit(function(){
+        $button = $(this).find('[type="submit"]')
+        $button.find('i').show('slow')
+        $button.find('span').hide('slow')
+      })
+    })
+  </script>
 {% endblock %}

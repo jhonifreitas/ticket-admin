@@ -18,6 +18,9 @@
               {% include 'core/components/field.html' with field=form.phone class='mask-phone' %}
             </div>
             <div class="col-md-6">
+              {% include 'core/components/field.html' with field=form.cpf class='mask-cpf' %}
+            </div>
+            <div class="col-md-6">
               {% include 'core/components/field.html' with field=form.email %}
             </div>
           </div>
@@ -34,6 +37,7 @@
 {% block js %}
   <script type="text/javascript">
     $(function(){
+      $('.mask-cpf').mask('999.999.999-99');
       $('.mask-phone').mask('(99) 99999-9999');
     })
   </script>

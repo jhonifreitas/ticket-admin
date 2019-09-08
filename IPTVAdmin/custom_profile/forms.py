@@ -17,7 +17,14 @@ class ProfileForm(forms.ModelForm):
         model = models.Profile
         exclude = ['config', 'deleted_at']
 
+    cpf = forms.CharField(label='CPF')
     phone = forms.CharField(label='Telefone')
+
+    def clean_cpf(self):
+        cpf = utils.CPF(self.cleaned_data.get('cpf'))
+        if not cpf.validate():
+            raise forms.ValidationError('CPF inválido!')
+        return cpf.cleaning()
 
     def clean_phone(self):
         return utils.Phone(self.cleaned_data.get('phone')).cleaning()

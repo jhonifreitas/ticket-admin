@@ -1,10 +1,8 @@
 from django.views import View
 from django.contrib import messages
 from django.urls import reverse_lazy
-from django.http import JsonResponse
 from django.views.generic.list import ListView
 from django.views.generic.detail import DetailView
-from django.template.loader import render_to_string
 from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import login_required
 from django.contrib.messages.views import SuccessMessageMixin
@@ -110,4 +108,3 @@ class ConfigView(BaseView):
             return redirect(self.success_url)
         context['form'] = form
         return render(request, self.template_name, context=context)
-    

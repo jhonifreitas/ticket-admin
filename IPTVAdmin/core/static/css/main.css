@@ -71,7 +71,8 @@
     opacity: 0.7;
   }
   
-  .flat-right{
+  .flat-right,
+  .flat-left{
     position: absolute;
     bottom: 0;
     right: 0;
@@ -81,6 +82,11 @@
   .content-wrapper>.flat-right{
     bottom: 15px;
     right: 15px;
+  }
+  .content-wrapper>.flat-left{
+    bottom: 15px;
+    left: 15px;
+    right: auto;
   }
   .content form{
     min-height: 81.8vh;
@@ -151,6 +157,10 @@
   .box-header{
     padding: 20px 25px;
     border-bottom: 1px solid #f1f1f1;
+  }
+  .box-header>.box-tools{
+    right: 1.5rem;
+    top: 1rem;
   }
   .box-primary .box-header:before{background-color: #04a9f5;}
   .box-info .box-header:before{background-color: #00c0ef;}

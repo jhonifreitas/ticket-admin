@@ -24,3 +24,6 @@ git+https://github.com/cosmunsoftwares/django-auditlog.git
 # Django Tests
 django-test-without-migrations
 ipython
+
+# XMLJSON
+xmljson

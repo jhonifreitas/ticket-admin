@@ -13,7 +13,7 @@ class BaseTestCase(TestCase):
         self.username = 'test'
         self.password = 'test'
         self.create_user()
-        self.create_account()
+        # self.create_account()
         self.add_permissions()
         self.login()
 
@@ -32,8 +32,4 @@ class BaseTestCase(TestCase):
                 self.user.user_permissions.add(permission)
 
     def login(self):
-        self.client.post(reverse_lazy('account:login'), {'username': self.user.username, 'password': self.password})
-
-    @classmethod
-    def tearDownClass(cls):
-        shutil.rmtree(settings.BASE_DIR + '/schedules/media', ignore_errors=True)
+        self.client.post(reverse_lazy('profile:login'), {'username': self.user.username, 'password': self.password})
