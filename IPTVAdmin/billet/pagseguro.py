@@ -31,11 +31,11 @@ class Pagseguro:
             if result_json.get('resultsInThisPage'):
                 transactions = []
                 if isinstance(result_json.get('transactions'), list):
-                    for transaction in result_json.get('transactions'):        
+                    for transaction in result_json.get('transactions'):
                         transactions.append(self.appendTransaction(transaction))
                 else:
                     transactions.append(self.appendTransaction(result_json.get('transactions').get('transaction')))
-                result = {'ok': self.appendTransaction(transactions)}
+                result = {'ok': transactions}
             else:
                 result = {'warning': 'Nenhum boleto importado!'}
         else:
