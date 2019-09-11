@@ -30,17 +30,23 @@ class Pagseguro:
         if response.ok:
             if result_json.get('resultsInThisPage'):
                 transactions = []
-                for transaction in result_json.get('transactions').get('transaction'):
-                    if transaction.get('type') == 1 and transaction.get('paymentMethod').get('type') == 2:
-                        obj = self.get_transaction(transaction.get('code'))
-                        if obj:
-                            transactions.append(obj)
-                result = {'ok': transactions}
+                if isinstance(result_json.get('transactions'), list):
+                    for transaction in result_json.get('transactions'):        
+                        transactions.append(self.appendTransaction(transaction))
+                else:
+                    transactions.append(self.appendTransaction(result_json.get('transactions').get('transaction')))
+                result = {'ok': self.appendTransaction(transactions)}
             else:
                 result = {'warning': 'Nenhum boleto importado!'}
         else:
             result = {'error': result_json.get('error').get('message')}
         return result
+    
+    def appendTransaction(self, transaction):
+        if transaction.get('type') == 1 and transaction.get('paymentMethod').get('type') == 2:
+            obj = self.get_transaction(transaction.get('code'))
+            if obj:
+                return obj
 
     def get_transaction(self, code):
         url = f'{settings.PAGSEGURO_TRANSACOES_URL}/{code}{self.get_credencials()}'

@@ -98,10 +98,10 @@ class BilletCreateView(views.BaseCreateView):
 
         if response.ok:
             for billet in result_json.get('boletos'):
-                billet.update(**form.data.dict())
-                form = self.form_class(data=billet)
-                if form.is_valid():
-                    form.save()
+                form.instance.code = billet.get('code')
+                form.instance.barcode = billet.get('barcode')
+                form.instance.paymentLink = billet.get('paymentLink')
+                form.save()
             messages.success(self.request, self.success_message)
             return redirect(self.success_url)
 
