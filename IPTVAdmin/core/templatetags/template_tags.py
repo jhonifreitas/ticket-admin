@@ -12,7 +12,7 @@ def get_color_status(value):
         color = 'warning'
     elif Billet.CANCELED == value:
         color = 'danger'
-    elif Billet.DEBITED == value:
+    elif Billet.PAID == value or Billet.DEBITED == value:
         color = 'success'
     return color
 

@@ -1,4 +1,5 @@
 from django.views import View
+from django.db.models import Q
 from django.contrib import messages
 from django.urls import reverse_lazy
 from django.views.generic.list import ListView
@@ -69,7 +70,8 @@ class HomeView(BaseView):
             'billets_wainting': Billet.objects.filter(
                 profile__config=self.request.user.config, status=Billet.WAITING).count(),
             'billets_debited': Billet.objects.filter(
-                profile__config=self.request.user.config, status=Billet.DEBITED).count(),
+                Q(status=Billet.PAID) | Q(status=Billet.DEBITED),
+                profile__config=self.request.user.config).count(),
             'billets_canceled': Billet.objects.filter(
                 profile__config=self.request.user.config, status=Billet.CANCELED).count(),
             'billing': Billet.objects.get_billing(self.request.user.config)
