@@ -100,7 +100,7 @@ class BilletCreateView(views.BaseCreateView):
             for billet in result_json.get('boletos'):
                 form.instance.code = billet.get('code')
                 form.instance.barcode = billet.get('barcode')
-                form.instance.paymentLink = billet.get('paymentLink')
+                form.instance.paymentLink = billet.get('paymentLink').replace('print.jhtml', 'print_image.jhtml')
                 form.save()
             messages.success(self.request, self.success_message)
             return redirect(self.success_url)
