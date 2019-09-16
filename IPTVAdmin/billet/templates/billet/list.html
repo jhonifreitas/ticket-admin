@@ -11,7 +11,7 @@
           <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-plus"></i></button>
         </div>
       </div>
-      <form action="{% url 'billet:import' %}" method="POST" class="box-body" style="min-height: auto; padding-bottom: 0;{% if not form_import.initial_date.value %}display: none;{% endif %}">
+      <form action="{% url 'billet:import' %}" method="POST" class="box-body pb-0" style="min-height: auto; {% if not form_import.initial_date.value %}display: none;{% endif %}">
         {% csrf_token %}
         <div class="row">
           <div class="col-md-5">
