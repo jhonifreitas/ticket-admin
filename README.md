@@ -1,6 +1,6 @@
 # Como usar
 
-curl -L http://bit.ly/cosmun-softwares-django-boilerplate | bash -s <IPTVAdmin>
+curl -L http://bit.ly/cosmun-softwares-django-boilerplate | bash -s <ticket_admin>
 
 
 # <README.md>
@@ -17,7 +17,7 @@ curl -L http://bit.ly/cosmun-softwares-django-boilerplate | bash -s <IPTVAdmin>
 
 ```console
 git <git url>
-cd IPTVAdmin
+cd ticket_admin
 virtualenv env --python=python3 # python 3.6 ou mais atual
 source env/bin/activate
 pip install -r requirements_dev.txt

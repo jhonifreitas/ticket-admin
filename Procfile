@@ -1,2 +1,2 @@
 release: python manage.py migrate --noinput
-web: gunicorn IPTVAdmin.wsgi --log-file -
+web: gunicorn ticket_admin.wsgi --log-file -

@@ -1,0 +1,123 @@
+{% extends "base.html" %}
+{% load staticfiles template_tags %}
+
+{% block content %}
+  <section class="content">
+    <div class="box box-primary border-0 rounded-0 shadow-1 {% if not form_import.initial_date.value %}collapsed-box{% endif %}">
+      <div class="box-header">
+        <i class="fas fas fa-file-download mr-2"></i>
+        <h3 class="box-title">Importar</h3>
+        <div class="box-tools">
+          <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-plus"></i></button>
+        </div>
+      </div>
+      <form action="{% url 'billet:import' %}" method="POST" class="box-body pb-0" style="min-height: auto; {% if not form_import.initial_date.value %}display: none;{% endif %}">
+        {% csrf_token %}
+        <div class="row">
+          <div class="col-md-5">
+            {% include 'core/components/field.html' with field=form_import.initial_date %}
+          </div>
+          <div class="col-md-5">
+            {% include 'core/components/field.html' with field=form_import.final_date %}
+          </div>
+          <div class="col-md-2">
+            <label></label>
+            <button type="submit" class="btn btn-primary btn-lg btn-block">
+              <i class="fas fa-circle-notch fa-spin" style="display: none;"></i>
+              <span>Importar</span>
+            </button>
+          </div>
+        </div>
+      </form>
+    </div>
+
+    <div class="box box-primary border-0 rounded-0 shadow-1">
+      <div class="box-header">
+        <div class="row align-items-center">
+          <div class="col-md-8">
+            <i class="fas fa-list mr-2"></i>
+            <h3 class="box-title">Boletos</h3>
+          </div>
+          <div class="col-md-4">
+            <form class="pb-0" style="min-height: auto;">
+              <div class="input-group mb-2">
+                <input type="text" name="q" placeholder="Filtro" value="{{ request.GET.q }}" class="form-control">
+                <div class="input-group-append">
+                  <button type="submit" class="btn btn-primary"><i class="fas fa-search"></i></button>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+      <div class="box-body text-center px-0">
+        <div class="table-responsive">
+          <table class="table table-striped">
+            <thead>
+              <tr>
+                <th class="border-0 text-left pl-4">Perfil</th>
+                <th class="border-0">Vencimento</th>
+                <th class="border-0">Status</th>
+                <th class="border-0">Valor</th>
+                <th class="border-0" width="300">Ações</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for object in object_list %}
+                <tr>
+                  <td class="text-left pl-4">{{ object.profile }}</td>
+                  <td>{{ object.dueDate | default:'Sem vencimento' }}</td>
+                  <td class="text-{{ object.status | get_color_status }} font-weight-bold">{{ object.get_status_display }}</td>
+                  <td>R$ {{ object.amount }}</td>
+                  <td>
+                    <a href="{% url 'billet:sync' object.code %}" class="btn btn-outline-secondary" title="Sincronizar"><i class="fas fa-sync-alt"></i></a>
+                    <a href="{{ object.paymentLink }}" class="btn btn-outline-primary" title="Boleto" target="_blank"><i class="fas fa-file"></i></a>
+                  </td>
+                </tr>
+              {% empty %}
+                <tr><td colspan="6" class="text-center">Nenhum registro encontrado!</td></tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+        {% if is_paginated %}
+          <div class="px-4">
+            {% include 'core/components/pagination.html' with obj=page_obj paginator=paginator %}
+          </div>
+        {% endif %}
+      </div>
+    </div>
+  </section>
+  <a href="{% url 'billet:create' %}" class="btn btn-primary flat-right rounded-circle"><i class="fas fa-plus"></i></a>
+{% endblock %}
+{% block modal %}
+  {% include 'core/components/form-error.html' with form=form_import %}
+{% endblock %}
+{% block css %}
+  <link href="{% static 'plugins/datetimepicker/css/datetimepicker.min.css' %}" rel="stylesheet">
+{% endblock %}
+{% block js %}
+  <script src="{% static 'plugins/moment/moment-with-locales.min.js' %}"></script>
+  <script src="{% static 'plugins/locale/pt-br.js' %}"></script>
+  <script src="{% static 'plugins/datetimepicker/js/datetimepicker.js' %}"></script>
+  <script>
+    $(function(){
+      $('[name="initial_date"]').datetimepicker({
+        locale: 'pt-br',
+        format: 'DD/MM/YYYY',
+        maxDate: moment(new Date()).subtract(1, 'days')
+      });
+      $('[name="final_date"]').datetimepicker({
+        locale: 'pt-br',
+        format: 'DD/MM/YYYY',
+        maxDate: new Date()
+      });
+
+      $('form').submit(function(){
+        $button = $(this).find('[type="submit"]')
+        $button.find('i').show('slow')
+        $button.find('span').hide('slow')
+      })
+    })
+  </script>
+{% endblock %}
