@@ -1,3 +1,5 @@
+from datetime import datetime, timedelta
+
 from django.db.models import Q
 from django.contrib import messages
 from django.urls import reverse_lazy
@@ -103,6 +105,7 @@ class BilletCreateView(views.BaseCreateView):
 
     def get_initial(self):
         initial = self.initial.copy()
+        initial['dueDate'] = datetime.now().date() + timedelta(days=1)
         initial['instructions'] = self.request.user.config.instructions_billet
         initial['description'] = self.request.user.config.description_billet
         initial['amount'] = self.request.user.config.amount_billet

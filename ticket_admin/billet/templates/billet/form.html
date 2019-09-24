@@ -3,31 +3,42 @@
 
 {% block content %}
   <section class="content">
-    <form method="POST" class="position-relative">
+    <form method="POST" class="row">
       {% csrf_token %}
-      <div class="box box-primary border-0 rounded-0 shadow-1">
-        <div class="box-header">
-          <i class="fas fa-edit mr-2"></i>
-          <h3 class="box-title">Formulário</h3>
+      <div class="col-md-8">
+        <div class="box box-primary border-0 rounded-0 shadow-1">
+          <div class="box-header">
+            <i class="fas fa-edit mr-2"></i>
+            <h3 class="box-title">Formulário</h3>
+          </div>
+          <div class="box-body">
+            {% include 'core/components/field.html' with field=form.profile class='custom-select' %}
+            <div class="row">
+              <div class="col-md-6">
+                {% include 'core/components/field.html' with field=form.instructions %}
+              </div>
+              <div class="col-md-6">
+                {% include 'core/components/field.html' with field=form.description %}
+              </div>
+              <div class="col-md-6">
+                  {% include 'core/components/field.html' with field=form.numberOfPayments %}
+              </div>
+              <div class="col-md-6">
+                {% include 'core/components/field.html' with field=form.amount class='mask-money' %}
+              </div>
+            </div>
+          </div>
         </div>
-        <div class="box-body">
-          {% include 'core/components/field.html' with field=form.profile class='custom-select' %}
-          <div class="row">
-            <div class="col-md-6">
-              {% include 'core/components/field.html' with field=form.dueDate class='datetimepicker' %}
-            </div>
-            <div class="col-md-6">
-              {% include 'core/components/field.html' with field=form.numberOfPayments %}
-            </div>
-            <div class="col-md-6">
-              {% include 'core/components/field.html' with field=form.instructions %}
-            </div>
-            <div class="col-md-6">
-              {% include 'core/components/field.html' with field=form.description %}
-            </div>
-            <div class="col-md-6">
-              {% include 'core/components/field.html' with field=form.amount class='mask-money' %}
-            </div>
+      </div>
+      <div class="col-md-4">
+        <div class="box box-primary border-0 rounded-0 shadow-1">
+          <div class="box-header">
+            <i class="fas fa-calendar mr-2"></i>
+            <h3 class="box-title">Formulário</h3>
+          </div>
+          <div class="box-body">
+            {{ form.dueDate }}
+            <div id="datetimepicker"></div>
           </div>
         </div>
       </div>
@@ -53,10 +64,16 @@
       $('.mask-money').mask('#.##0,00', {reverse: true});
       
       // DATETIMEPICKER
-      $('.datetimepicker').datetimepicker({
+      $('#datetimepicker').datetimepicker({
+        inline: true,
+        sideBySide: true,
         locale: 'pt-br',
         format: 'DD/MM/YYYY',
         minDate: moment(new Date()).add(1,'days')
+      });
+
+      $("#datetimepicker").on("dp.change", function (e) {
+        $('[name="dueDate"]').val(e.date.format('YYYY-MM-DD'))
       });
     })
   </script>

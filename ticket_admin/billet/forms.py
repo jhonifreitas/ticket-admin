@@ -9,6 +9,10 @@ class BilletForm(forms.ModelForm):
     class Meta:
         model = models.Billet
         exclude = ['code', 'paymentLink', 'barcode', 'reference', 'status', 'deleted_at']
+        widgets = {
+            'dueDate': forms.HiddenInput(),
+            'instructions': forms.TextInput(attrs={'readonly': True})
+        }
 
     amount = forms.CharField(label='Valor', max_length=10)
 
