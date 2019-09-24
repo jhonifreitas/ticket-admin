@@ -13,7 +13,7 @@ class Billet(AbstractBaseModel):
     class Meta:
         verbose_name = 'Boleto'
         verbose_name_plural = 'Boletos'
-        ordering = ['created_at']
+        ordering = ['-dueDate', '-created_at']
         permissions = [
             ('list_billet', 'Pode Listar Boletos'),
         ]
