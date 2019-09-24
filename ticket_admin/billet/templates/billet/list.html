@@ -56,6 +56,7 @@
             <thead>
               <tr>
                 <th class="border-0 text-left pl-4">Perfil</th>
+                <th class="border-0">Código de Barras</th>
                 <th class="border-0">Vencimento</th>
                 <th class="border-0">Status</th>
                 <th class="border-0">Valor</th>
@@ -66,10 +67,11 @@
               {% for object in object_list %}
                 <tr>
                   <td class="text-left pl-4">{{ object.profile }}</td>
-                  <td>{{ object.dueDate | default:'Sem vencimento' }}</td>
+                  <td>{{ object.barcode | default:'----' }}</td>
+                  <td>{{ object.dueDate | date:'d/m/Y' | default:'Sem vencimento' }}</td>
                   <td class="text-{{ object.status | get_color_status }} font-weight-bold">{{ object.get_status_display }}</td>
                   <td>R$ {{ object.amount }}</td>
-                  <td>
+                  <td width="15%">
                     <a href="{% url 'billet:sync' object.code %}" class="btn btn-outline-secondary" title="Sincronizar"><i class="fas fa-sync-alt"></i></a>
                     <a href="{{ object.paymentLink }}" class="btn btn-outline-primary" title="Boleto" target="_blank"><i class="fas fa-file"></i></a>
                   </td>
