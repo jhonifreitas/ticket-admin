@@ -66,7 +66,7 @@
             <tbody>
               {% for object in object_list %}
                 <tr>
-                  <td class="text-left pl-4">{{ object.profile }}</td>
+                  <td class="text-left pl-4"><a href="{% url 'profile:update' object.profile.pk %}">{{ object.profile }}</a></td>
                   <td>{{ object.barcode | default:'----' }}</td>
                   <td>{{ object.dueDate | date:'d/m/Y' | default:'Sem vencimento' }}</td>
                   <td class="text-{{ object.status | get_color_status }} font-weight-bold">{{ object.get_status_display }}</td>
