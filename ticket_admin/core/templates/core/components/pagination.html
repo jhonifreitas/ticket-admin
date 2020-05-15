@@ -39,7 +39,7 @@
     <div class="col d-md-none">
       <h6>Página {{ obj.number }} de {{ paginator.num_pages }} páginas</h6>
     </div>
-    <div class="col d-none d-md-block text-md-right">
+    <div class="col-12 col-md mt-3 text-md-right">
       <select name="paginate_by" class="form-control col-md-4 text-center ml-auto">
         <option value="10">10</option>
         <option value="20" {% if request.GET.paginate_by == '20' %}selected{% endif %}>20</option>
