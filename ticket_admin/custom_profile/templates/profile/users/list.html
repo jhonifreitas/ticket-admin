@@ -8,7 +8,7 @@
         <div class="row align-items-center">
           <div class="col-md-8">
             <i class="fas fa-list mr-2"></i>
-            <h3 class="box-title">Usuários do Cliente <b>{{ profile.name }}</b></h3>
+            <h3 class="box-title">Usuários{% if profile %} de <b>{{ profile.name }}</b>{% endif %}</h3>
           </div>
           <div class="col-md-4">
             <form class="pb-0" style="min-height: auto;">
@@ -35,7 +35,7 @@
                 <th class="border-0">Observação</th>
                 <th class="border-0">Data de expiração</th>
                 <th class="border-0">Status</th>
-                <th class="border-0" width="300">Ações</th>
+                <th class="border-0" width="250">Ações</th>
               </tr>
             </thead>
             <tbody>
@@ -54,7 +54,7 @@
                       <a href="{% url 'billet:create' %}?profile={{ profile.uuid }}&dueDate={{ object.expiration|date:'Y-m-d' }}&amount={{ object.value|unlocalize }}" class="btn btn-outline-info" title="Gerar Boleto"><i class="fas fa-file"></i></a>
                     {% endif %}
                     <a href="https://api.whatsapp.com/send?phone=55{{ object.profile.phone }}&text={{ object|get_whats_message }}" target="_blank" class="btn btn-outline-success"><i class="fab fa-whatsapp"></i></a>
-                    <a href="{% url 'profile:user-update' profile.uuid object.uuid %}" class="btn btn-outline-success" title="Editar"><i class="fas fa-edit"></i></a>
+                    <a href="{% url 'profile:user-update' object.uuid %}{% if profile %}?profile={{ profile.uuid }}{% endif %}" class="btn btn-outline-success" title="Editar"><i class="fas fa-edit"></i></a>
                     <button type="button" data-toggle="modal" data-target="#confirm-{{ object.uuid }}" class="btn btn-outline-danger" title="Deletar"><i class="fas fa-trash"></i></button>
                   </td>
                 </tr>
@@ -72,11 +72,11 @@
       </div>
     </div>
   </section>
-  <a href="{% url 'profile:user-create' profile.uuid %}" class="btn btn-primary flat-right rounded-circle"><i class="fas fa-plus"></i></a>
+  <a href="{% url 'profile:user-create' %}{% if profile %}?profile={{ profile.uuid }}{% endif %}" class="btn btn-primary flat-right rounded-circle"><i class="fas fa-plus"></i></a>
 {% endblock %}
 {% block modal %}
   {% for object in object_list %}
-    {% url 'profile:user-delete' profile.uuid object.uuid as url_delete %}
+    {% url 'profile:user-delete' object.uuid as url_delete %}
 
     {% include 'core/components/modal_confirm.html' with uuid=object.uuid url=url_delete %}
   {% endfor %}

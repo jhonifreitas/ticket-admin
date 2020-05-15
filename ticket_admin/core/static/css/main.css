@@ -60,6 +60,9 @@ body::-webkit-scrollbar-track {
 .skin-black .main-header .navbar .sidebar-toggle:hover{
   background-color: transparent;
 }
+.skin-black .sidebar-menu .treeview-menu>li>a{
+  padding: 12px 5px 12px 15px;
+}
 .small-box>.inner{
   position: relative;
   z-index: 9;
@@ -179,6 +182,11 @@ body::-webkit-scrollbar-track {
 
 .table td{
   vertical-align: middle;
+}
+
+.page-item.active .page-link{
+  border-color: #04a9f5;
+  background-color: #04a9f5;
 }
 
 /* ========================================================= */

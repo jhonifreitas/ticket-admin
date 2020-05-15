@@ -15,6 +15,10 @@
   .sidebar-mini:not(.sidebar-mini-expand-feature).sidebar-collapse .sidebar-menu>li:hover>.treeview-menu {
     top: 48px;
   }
+  .sidebar-mini:not(.sidebar-mini-expand-feature).sidebar-collapse .sidebar-menu>li:hover>a>.pull-right-container{
+    left: 185px !important;
+    top: -29px !important;
+  }
   .main-sidebar, .main-header .logo{
     width: 265px;
   }

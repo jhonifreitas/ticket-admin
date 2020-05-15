@@ -76,6 +76,8 @@ def get_whats_message(user):
             message += 'Agência: {}%0a'.format(bank.agency)
             message += 'Conta: {}%0a'.format(bank.account)
             message += '{}%0a'.format(bank.get_types_display())
+            if bank.operation:
+                message += 'Operação: {}%0a'.format(bank.operation)
             message += '{}%0a'.format(bank.fullname)
             message += 'CPF: {}'.format(bank.get_cpf_formated)
     return message

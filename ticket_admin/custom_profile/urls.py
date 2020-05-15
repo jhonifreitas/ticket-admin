@@ -14,9 +14,9 @@ urlpatterns = [
     path('formulario/<uuid:uuid>/', views.ProfileUpdateView.as_view(), name='update'),
     path('<uuid:uuid>/', views.ProfileDeleteView.as_view(), name='delete'),
 
-    path('usuario/<uuid:profile_uuid>/', views.ProfileUserListView.as_view(), name='user-list'),
-    path('usuario/<uuid:profile_uuid>/formulario/', views.ProfileUserCreateView.as_view(), name='user-create'),
-    path('usuario/<uuid:profile_uuid>/formulario/<uuid:uuid>/', views.ProfileUserUpdateView.as_view(),
+    path('usuario/', views.ProfileUserListView.as_view(), name='user-list'),
+    path('usuario/formulario/', views.ProfileUserCreateView.as_view(), name='user-create'),
+    path('usuario/formulario/<uuid:uuid>/', views.ProfileUserUpdateView.as_view(),
          name='user-update'),
-    path('usuario/<uuid:profile_uuid>/<uuid:uuid>/', views.ProfileUserDeleteView.as_view(), name='user-delete'),
+    path('usuario/<uuid:uuid>/', views.ProfileUserDeleteView.as_view(), name='user-delete'),
 ]

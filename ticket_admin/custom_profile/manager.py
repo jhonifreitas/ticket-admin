@@ -14,14 +14,18 @@ class ProfileUserManager(Manager):
             Q(status=models.ProfileUser.WAITING),
             profile__user=user
         ).values('value').annotate(total=Sum('value')).order_by()
-        return queryset[0].get('total')
+        if queryset:
+            return queryset[0].get('total')
+        return 0
 
     def get_billing_liquid(self, user):
-        user_total = self.filter(
+        query_user = self.filter(
             Q(status=models.ProfileUser.ACTIVE) |
             Q(status=models.ProfileUser.WAITING),
             profile__user=user
-        ).values('value').annotate(total=Sum('value')).order_by()[0].get('total')
-        painel_total = self.filter(
-            profile__user=user).values('panel').annotate(total=Sum('panel__value')).order_by()[0].get('total')
-        return user_total - painel_total
+        ).values('value').annotate(total=Sum('value')).order_by()
+        query_panel = self.filter(
+            profile__user=user).values('panel').annotate(total=Sum('panel__value')).order_by()
+        if query_user and query_user:
+            return query_user[0].get('total') - query_panel[0].get('total')
+        return 0

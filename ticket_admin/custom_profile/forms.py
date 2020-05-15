@@ -37,7 +37,7 @@ class ProfileUserForm(forms.ModelForm):
 
     class Meta:
         model = models.ProfileUser
-        exclude = ['profile', 'status', 'deleted_at']
+        exclude = ['status', 'deleted_at']
         widgets = {
             'expiration': forms.HiddenInput()
         }

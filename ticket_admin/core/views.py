@@ -37,6 +37,12 @@ class BaseListView(BaseView, ListView):
 
     paginate_by = 10
 
+    def get_queryset(self):
+        paginate_by = self.request.GET.get('paginate_by')
+        if paginate_by:
+            self.paginate_by = paginate_by
+        return super().get_queryset()
+
 
 class BaseCreateView(BaseView, CreateView):
 
