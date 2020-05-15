@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% load template_tags %}
+
+{% block content %}
+  <section class="content">
+    <div class="row">
+      {% for object in object_list %}
+        <div class="col-md-4">
+          <a href="{% url 'core:detail-tutorial' object.uuid %}">
+            <div class="box box-primary border-0 rounded-0 shadow-1">
+              <div class="box-body text-center p-0">
+                <img src="{{ object.images.first.image.url }}" class="img-fluid" alt="">
+                <h2 class="my-2">{{ object.name }}</h2>
+                {% if is_paginated %}
+                  <div class="px-4">
+                    {% include 'core/components/pagination.html' with obj=page_obj paginator=paginator %}
+                  </div>
+                {% endif %}
+              </div>
+            </div>
+          </a>
+        </div>
+      {% endfor %}
+    </div>
+  </section>
+{% endblock %}

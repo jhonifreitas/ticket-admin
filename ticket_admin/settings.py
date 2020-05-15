@@ -57,8 +57,11 @@ EXTRA_APPS = [
 ]
 
 PROJECT_APPS = [
-    'ticket_admin.custom_profile.apps.CustomProfileConfig',
+    'ticket_admin.bank.apps.BankConfig',
+    'ticket_admin.panel.apps.PanelConfig',
     'ticket_admin.billet.apps.BilletConfig',
+    'ticket_admin.payment.apps.PaymentConfig',
+    'ticket_admin.custom_profile.apps.CustomProfileConfig',
 ]
 
 INSTALLED_APPS += EXTRA_APPS
@@ -88,6 +91,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'ticket_admin.core.context_processors.debug',
             ],
         },
     },
@@ -173,6 +177,21 @@ DEFAULT_FILE_STORAGE = config('DEFAULT_FILE_STORAGE', default='django.core.files
 if DEFAULT_FILE_STORAGE == 'django.core.files.storage.FileSystemStorage':
     MEDIA_ROOT = config('MEDIA_ROOT', default=os.path.join(BASE_DIR, 'ticket_admin/media'))
 
+# REST Framework Configuration
+
+REST_FRAMEWORK = {
+    'DEFAULT_RENDERER_CLASSES': (
+        'rest_framework.renderers.JSONRenderer',
+    ),
+    'DEFAULT_PARSER_CLASSES': (
+        'rest_framework.parsers.MultiPartParser',
+        'rest_framework.parsers.FormParser'
+    ),
+    'NON_FIELD_ERRORS_KEY': '__all__',
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
+    'PAGE_SIZE': 10
+}
+
 # Email configuration
 
 EMAIL_BACKEND = config('EMAIL_BACKEND')
@@ -183,8 +202,3 @@ EMAIL_HOST_USER = config('EMAIL_HOST_USER')
 EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD')
 DEFAULT_FROM_EMAIL = config('DEFAULT_FROM_EMAIL')
 SERVER_EMAIL = config('SERVER_EMAIL')
-
-
-# PAGSEGURO
-PAGSEGURO_BOLETO_URL = config('PAGSEGURO_BOLETO_URL')
-PAGSEGURO_TRANSACOES_URL = config('PAGSEGURO_TRANSACOES_URL')

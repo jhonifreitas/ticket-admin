@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <section class="content">
+    <form method="POST" class="position-relative">
+      {% csrf_token %}
+      <div class="box box-primary border-0 rounded-0 shadow-1">
+        <div class="box-header">
+          <i class="fas fa-edit mr-2"></i>
+          <h3 class="box-title">Formulário</h3>
+        </div>
+        <div class="box-body">
+          <div class="row">
+            <div class="col-md-6">
+              {% include 'core/components/field.html' with field=form.name %}
+            </div>
+            <div class="col-md-6">
+              {% include 'core/components/field.html' with field=form.value class='mask-money' %}
+            </div>
+          </div>
+        </div>
+      </div>
+      <button type="submit" class="btn btn-primary flat-right rounded-circle"><i class="fas fa-save"></i></button>
+    </form>
+  </section>
+
+{% endblock %}
+{% block modal %}
+  {% include 'core/components/form-error.html' with form=form %}
+{% endblock %}
+{% block js %}
+  <script type="text/javascript">
+    $(function(){
+      $('.mask-money').mask('#.##0,00', {reverse: true});
+    })
+  </script>
+{% endblock %}

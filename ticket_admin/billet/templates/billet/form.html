@@ -34,7 +34,7 @@
         <div class="box box-primary border-0 rounded-0 shadow-1">
           <div class="box-header">
             <i class="fas fa-calendar mr-2"></i>
-            <h3 class="box-title">Formulário</h3>
+            <h3 class="box-title">Data de vencimento</h3>
           </div>
           <div class="box-body">
             {{ form.dueDate }}
@@ -69,6 +69,7 @@
         sideBySide: true,
         locale: 'pt-br',
         format: 'DD/MM/YYYY',
+        date: moment($('[name="dueDate"]').val()),
         minDate: moment(new Date()).add(1,'days')
       });
 

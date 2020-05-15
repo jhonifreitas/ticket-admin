@@ -1,0 +1,67 @@
+{% extends "base.html" %}
+{% load template_tags %}
+
+{% block content %}
+  <section class="content">
+    <div class="box box-primary border-0 rounded-0 shadow-1">
+      <div class="box-header">
+        <div class="row align-items-center">
+          <div class="col-md-8">
+            <i class="fas fa-list mr-2"></i>
+            <h3 class="box-title">Pagamentos</h3>
+          </div>
+          <div class="col-md-4">
+            <form class="pb-0" style="min-height: auto;">
+              <div class="input-group mb-2">
+                <input type="text" name="q" placeholder="Filtro" value="{{ request.GET.q }}" class="form-control">
+                <div class="input-group-append">
+                  <button type="submit" class="btn btn-primary"><i class="fas fa-search"></i></button>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+      <div class="box-body text-center px-0">
+        <div class="table-responsive">
+          <table class="table table-striped">
+            <thead>
+              <tr>
+                <th class="border-0 text-left pl-4">Data</th>
+                <th class="border-0">Status</th>
+                <th class="border-0" width="300">Ações</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for object in object_list %}
+                <tr>
+                  <td class="align-middle text-left pl-4">{{ object.date }}</td>
+                  <td class="align-middle font-weight-bold text-{{ object.status|get_payment_color_status }}">{{ object.get_status_display }}</td>
+                  <td>
+                    <a href="{% url 'payment:detail' object.uuid %}" class="btn btn-outline-info" title="Detalhe"><i class="fas fa-eye"></i></a>
+                    <button type="button" data-toggle="modal" data-target="#confirm-{{ object.uuid }}" class="btn btn-outline-danger" title="Deletar"><i class="fas fa-trash"></i></button>
+                  </td>
+                </tr>
+              {% empty %}
+                <tr><td colspan="6" class="text-center">Nenhum registro encontrado!</td></tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+        {% if is_paginated %}
+          <div class="px-4">
+            {% include 'core/components/pagination.html' with obj=page_obj paginator=paginator %}
+          </div>
+        {% endif %}
+      </div>
+    </div>
+  </section>
+  <a href="{% url 'payment:create' %}" class="btn btn-primary flat-right rounded-circle"><i class="fas fa-plus"></i></a>
+{% endblock %}
+{% block modal %}
+  {% for object in object_list %}
+    {% url 'payment:delete' object.uuid as url_delete %}
+
+    {% include 'core/components/modal_confirm.html' with uuid=object.uuid url=url_delete %}
+  {% endfor %}
+{% endblock %}

@@ -10,7 +10,7 @@
           <div class="box box-primary border-0 rounded-0 shadow-1">
             <div class="box-header">
               <i class="fas fa-cogs mr-2"></i>
-              <h3 class="box-title">Configuração</h3>
+              <h3 class="box-title">Configuração do pagseguro</h3>
             </div>
             <div class="box-body">
               {% include 'core/components/field.html' with field=form.token %}
@@ -25,15 +25,8 @@
               <h3 class="box-title">Boleto Padrão</h3>
             </div>
             <div class="box-body">
-              {% include 'core/components/field.html' with field=form.amount_billet class='mask-money' %}
-              <div class="row">
-                <div class="col-md-6">
-                  {% include 'core/components/field.html' with field=form.instructions_billet %}
-                </div>
-                <div class="col-md-6">
-                  {% include 'core/components/field.html' with field=form.description_billet %}
-                </div>
-              </div>
+              {% include 'core/components/field.html' with field=form.instructions_billet %}
+              {% include 'core/components/field.html' with field=form.description_billet %}
             </div>
           </div>
         </div>

@@ -1,5 +1,5 @@
 # Application
-Django
+Django==2.2.10
 Pillow
 psycopg2==2.7.7
 psycopg2-binary==2.7.7
@@ -27,3 +27,8 @@ ipython
 
 # XMLJSON
 xmljson
+
+# Django Rest Framework
+djangorestframework
+itsdangerous
+django-cors-headers

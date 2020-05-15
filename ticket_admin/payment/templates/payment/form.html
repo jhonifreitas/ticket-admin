@@ -1,0 +1,82 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+
+{% block content %}
+  <section class="content">
+    <form method="POST" class="row position-relative" enctype="multipart/form-data">
+      {% csrf_token %}
+      <div class="col-md-8">
+        <div class="box box-primary border-0 rounded-0 shadow-1">
+          <div class="box-header">
+            <i class="fas fa-edit mr-2"></i>
+            <h3 class="box-title">Formulário</h3>
+          </div>
+          <div class="box-body">
+            {{ form.image }}
+            <label for="{{ form.image.id_for_label }}" class="dropzone d-block p-5 text-center mb-0" style="cursor: pointer;">
+              <span>Clique aqui para carregar o comprovante de pagamento!</span>
+            </label>
+            {% include 'core/components/field-error.html' with field=form.photo %}
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="box box-primary border-0 rounded-0 shadow-1">
+          <div class="box-header">
+            <i class="fas fa-calendar mr-2"></i>
+            <h3 class="box-title">Data do pagamento</h3>
+          </div>
+          <div class="box-body">
+            {{ form.date }}
+            <div id="datetimepicker"></div>
+          </div>
+        </div>
+      </div>
+      <button type="submit" class="btn btn-primary flat-right rounded-circle"><i class="fas fa-save"></i></button>
+    </form>
+  </section>
+
+{% endblock %}
+{% block modal %}
+  {% include 'core/components/form-error.html' with form=form %}
+{% endblock %}
+{% block css %}
+  <link href="{% static 'plugins/datetimepicker/css/datetimepicker.min.css' %}" rel="stylesheet">
+{% endblock %}
+{% block js %}
+  <script src="{% static 'plugins/moment/moment-with-locales.min.js' %}"></script>
+  <script src="{% static 'plugins/locale/pt-br.js' %}"></script>
+  <script src="{% static 'plugins/datetimepicker/js/datetimepicker.js' %}"></script>
+  <script type="text/javascript">
+    $(function(){
+      // DATETIMEPICKER
+      $('#datetimepicker').datetimepicker({
+        inline: true,
+        sideBySide: true,
+        locale: 'pt-br',
+        format: 'DD/MM/YYYY'
+      });
+
+      $("#datetimepicker").on("dp.change", function (e) {
+        $('[name="date"]').val(e.date.format('YYYY-MM-DD'))
+      });
+
+      // UPLOAD IMAGE
+      $('#id_image').change(function() {
+        var $label = $(this).parent().find('label');
+        var $span = $label.find('span');
+
+        if (this.files && this.files[0]) {
+          var reader = new FileReader();
+          reader.onload = function(e) {
+            if(!$span.hasClass('d-none')){
+              $span.addClass('d-none');
+            }
+            $label.append('<img src="'+e.target.result+'" class="img-fluid"/>');
+          }
+          reader.readAsDataURL(this.files[0]);
+        }
+      });
+    })
+  </script>
+{% endblock %}

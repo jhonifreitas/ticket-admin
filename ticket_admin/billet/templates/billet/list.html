@@ -3,34 +3,6 @@
 
 {% block content %}
   <section class="content">
-    <div class="box box-primary border-0 rounded-0 shadow-1 {% if not form_import.initial_date.value %}collapsed-box{% endif %}">
-      <div class="box-header">
-        <i class="fas fas fa-file-download mr-2"></i>
-        <h3 class="box-title">Importar</h3>
-        <div class="box-tools">
-          <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-plus"></i></button>
-        </div>
-      </div>
-      <form action="{% url 'billet:import' %}" method="POST" class="box-body pb-0" style="min-height: auto; {% if not form_import.initial_date.value %}display: none;{% endif %}">
-        {% csrf_token %}
-        <div class="row">
-          <div class="col-md-5">
-            {% include 'core/components/field.html' with field=form_import.initial_date %}
-          </div>
-          <div class="col-md-5">
-            {% include 'core/components/field.html' with field=form_import.final_date %}
-          </div>
-          <div class="col-md-2">
-            <label></label>
-            <button type="submit" class="btn btn-primary btn-lg btn-block">
-              <i class="fas fa-circle-notch fa-spin" style="display: none;"></i>
-              <span>Importar</span>
-            </button>
-          </div>
-        </div>
-      </form>
-    </div>
-
     <div class="box box-primary border-0 rounded-0 shadow-1">
       <div class="box-header">
         <div class="row align-items-center">
@@ -55,7 +27,7 @@
           <table class="table table-striped">
             <thead>
               <tr>
-                <th class="border-0 text-left pl-4">Perfil</th>
+                <th class="border-0 text-left pl-4">Cliente</th>
                 <th class="border-0">Código de Barras</th>
                 <th class="border-0">Vencimento</th>
                 <th class="border-0">Status</th>
@@ -66,10 +38,10 @@
             <tbody>
               {% for object in object_list %}
                 <tr>
-                  <td class="text-left pl-4"><a href="{% url 'profile:update' object.profile.pk %}">{{ object.profile }}</a></td>
+                  <td class="text-left pl-4"><a href="{% url 'profile:update' object.profile.uuid %}">{{ object.profile }}</a></td>
                   <td>{{ object.barcode | default:'----' }}</td>
                   <td>{{ object.dueDate | date:'d/m/Y' | default:'Sem vencimento' }}</td>
-                  <td class="text-{{ object.status | get_color_status }} font-weight-bold">{{ object.get_status_display }}</td>
+                  <td class="text-{{ object.status|get_billet_color_status }} font-weight-bold">{{ object.get_status_display }}</td>
                   <td>R$ {{ object.amount }}</td>
                   <td width="15%">
                     <a href="{% url 'billet:sync' object.code %}" class="btn btn-outline-secondary" title="Sincronizar"><i class="fas fa-sync-alt"></i></a>

@@ -11,6 +11,12 @@ urlpatterns = [
 
     path('', views.ProfileListView.as_view(), name='list'),
     path('formulario/', views.ProfileCreateView.as_view(), name='create'),
-    path('formulario/<int:pk>/', views.ProfileUpdateView.as_view(), name='update'),
-    path('<int:pk>/', views.ProfileDeleteView.as_view(), name='delete'),
+    path('formulario/<uuid:uuid>/', views.ProfileUpdateView.as_view(), name='update'),
+    path('<uuid:uuid>/', views.ProfileDeleteView.as_view(), name='delete'),
+
+    path('usuario/<uuid:profile_uuid>/', views.ProfileUserListView.as_view(), name='user-list'),
+    path('usuario/<uuid:profile_uuid>/formulario/', views.ProfileUserCreateView.as_view(), name='user-create'),
+    path('usuario/<uuid:profile_uuid>/formulario/<uuid:uuid>/', views.ProfileUserUpdateView.as_view(),
+         name='user-update'),
+    path('usuario/<uuid:profile_uuid>/<uuid:uuid>/', views.ProfileUserDeleteView.as_view(), name='user-delete'),
 ]

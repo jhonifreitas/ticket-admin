@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% load template_tags %}
+{% load l10n %}
 
 {% block content %}
   <section class="content">
@@ -8,7 +8,7 @@
         <div class="row align-items-center">
           <div class="col-md-8">
             <i class="fas fa-list mr-2"></i>
-            <h3 class="box-title">Usuários</h3>
+            <h3 class="box-title">Clientes</h3>
           </div>
           <div class="col-md-4">
             <form class="pb-0" style="min-height: auto;">
@@ -29,6 +29,8 @@
               <tr>
                 <th class="border-0 text-left pl-4">Nome</th>
                 <th class="border-0">Telefone</th>
+                <th class="border-0">Forma de pagamento</th>
+                <th class="border-0">Observação</th>
                 <th class="border-0" width="300">Ações</th>
               </tr>
             </thead>
@@ -36,11 +38,19 @@
               {% for object in object_list %}
                 <tr>
                   <td class="align-middle text-left pl-4">{{ object.name }}</td>
-                  <td class="align-middle">{{ object.phone|mask_phone }}</td>
+                  <td class="align-middle">
+                    <a href="https://api.whatsapp.com/send?phone=55{{ object.phone }}" target="_blank" class="text-success font-weight-bold">
+                      {{ object.get_phone_formated }}
+                    </a>
+                  </td>
+                  <td class="align-middle">{{ object.get_pay_method_display }}</td>
+                  <td class="align-middle">{{ object.observation|default:'----' }}</td>
                   <td>
-                    <a href="{% url 'billet:create' %}?profile={{ object.uuid }}" class="btn btn-outline-info" title="Gerar Boleto"><i class="fas fa-file"></i></a>
-                    
-                    <a href="{% url 'profile:update' object.pk %}" class="btn btn-outline-success" title="Editar"><i class="fas fa-edit"></i></a>
+                    {% if perms.billet.list_billet and object.cpf and object.email %}
+                      <a href="{% url 'billet:create' %}?profile={{ object.uuid }}&amount={{ object.get_total_amount|unlocalize }}" class="btn btn-outline-info" title="Gerar Boleto"><i class="fas fa-file"></i></a>
+                    {% endif %}
+                    <a href="{% url 'profile:user-list' object.uuid %}" class="btn btn-outline-dark" title="Usuários"><i class="fas fa-users"></i></a>
+                    <a href="{% url 'profile:update' object.uuid %}" class="btn btn-outline-success" title="Editar"><i class="fas fa-edit"></i></a>
                     <button type="button" data-toggle="modal" data-target="#confirm-{{ object.uuid }}" class="btn btn-outline-danger" title="Deletar"><i class="fas fa-trash"></i></button>
                   </td>
                 </tr>
@@ -62,7 +72,7 @@
 {% endblock %}
 {% block modal %}
   {% for object in object_list %}
-    {% url 'profile:delete' object.pk as url_delete %}
+    {% url 'profile:delete' object.uuid as url_delete %}
 
     {% include 'core/components/modal_confirm.html' with uuid=object.uuid url=url_delete %}
   {% endfor %}

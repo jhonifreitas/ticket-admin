@@ -9,7 +9,12 @@ from django.contrib.auth.models import User
 from django.utils.translation import ugettext_lazy as _
 
 from ticket_admin.core.manager import Manager
+from ticket_admin.storage import get_storage_path
 from ticket_admin.core.signals import post_soft_delete
+
+
+def get_tutorial_file_path(instance, filename):
+    return get_storage_path(filename, 'tutorial')
 
 
 class AbstractBaseModel(models.Model):
@@ -31,6 +36,10 @@ class AbstractBaseModel(models.Model):
         post_soft_delete.send(sender=type(self), instance=self, using=self._state.db)
 
     def __str__(self):
+        if hasattr(self, 'name'):
+            return self.name
+        if hasattr(self, 'title'):
+            return self.title
         return str(self.pk)
 
 
@@ -44,11 +53,36 @@ class Config(AbstractBaseModel):
     token = models.CharField(verbose_name='Token', max_length=255)
     instructions_billet = models.CharField(verbose_name='Instruções', max_length=100)
     description_billet = models.CharField(verbose_name='Descrição', max_length=100)
-    amount_billet = models.DecimalField(verbose_name='Valor', max_digits=15, decimal_places=2)
 
-    def __str__(self):
-        return self.user.username
+
+class Tutorial(AbstractBaseModel):
+
+    class Meta:
+        verbose_name = 'Tutorial'
+        verbose_name_plural = 'Tutoriais'
+        ordering = ['order', 'name']
+        permissions = [
+            ('list_tutorial', 'Pode Listar Tutoriais'),
+        ]
+
+    name = models.CharField(verbose_name='Nome', max_length=255)
+    url = models.URLField(verbose_name='Url', null=True, blank=True)
+    order = models.PositiveSmallIntegerField(verbose_name='Ordem', default=0)
+
+
+class TutorialImage(AbstractBaseModel):
+
+    class Meta:
+        verbose_name = 'Imagem'
+        verbose_name_plural = 'Imagens'
+
+    tutorial = models.ForeignKey(Tutorial, verbose_name='Tutorial', on_delete=models.CASCADE, related_name='images')
+    image = models.ImageField(verbose_name='Imagem', upload_to=get_tutorial_file_path)
+    title = models.CharField(verbose_name='Título', max_length=255, null=True, blank=True)
+    description = models.TextField(verbose_name='Descrição', null=True, blank=True)
 
 
 auditlog.register(User)
 auditlog.register(Config)
+auditlog.register(Tutorial)
+auditlog.register(TutorialImage)

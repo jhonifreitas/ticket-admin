@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% load template_tags %}
+
+{% block content %}
+  <section class="content">
+    <div class="box box-primary border-0 rounded-0 shadow-1">
+      <div class="box-header">
+        <div class="row align-items-center">
+          <div class="col-md-8">
+            <h3 class="box-title">{{ object.name }}</h3>
+          </div>
+          <div class="col-md-4">
+            <a href="https://api.whatsapp.com/send?phone=5554991449261"></a>
+          </div>
+        </div>
+      </div>
+      <div class="box-body text-center">
+        {% if object.url %}<iframe src="{{ object.url }}" class="border-0 w-100" style="height: 30rem;"></iframe>{% endif %}
+
+        <div class="row">
+          {% for image in object.images.all %}
+            <div class="col-md-4">
+              <img src="{{ image.image.url }}" class="img-fluid" alt="">
+              {% if object.title %}<h4>{{ object.title }}</h4>{% endif %}
+              {% if object.description %}<p>{{ object.description }}</p>{% endif %}
+            </div>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+  </section>
+{% endblock %}

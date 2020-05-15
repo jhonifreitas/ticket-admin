@@ -124,7 +124,7 @@ body::-webkit-scrollbar-track {
   background: #f4f7fa;
   padding: 10px 20px;
   font-size: 14px;
-  height: auto;
+  height: calc(2em + .75rem + 2px);
   border-radius: .25rem;
 }
 .form-control:focus{

@@ -27,14 +27,26 @@ admin.site.index_title = 'Administração'
 urlpatterns = [
     path('admin/', admin.site.urls),
 
-    # Home
+    # API
+    path('api/v1/', include('ticket_admin.api.v1.urls', namespace='api-v1')),
+
+    # HOME
     path('', include('ticket_admin.core.urls', namespace='core')),
 
-    # Usuarios
-    path('usuario/', include('ticket_admin.custom_profile.urls', namespace='profile')),
+    # PROFILE
+    path('cliente/', include('ticket_admin.custom_profile.urls', namespace='profile')),
 
-    # Boletos
+    # BILLET
     path('boleto/', include('ticket_admin.billet.urls', namespace='billet')),
+
+    # PANEL
+    path('painel/', include('ticket_admin.panel.urls', namespace='panel')),
+
+    # BANK
+    path('banco/', include('ticket_admin.bank.urls', namespace='bank')),
+
+    # PAYMENT
+    path('pagamento/', include('ticket_admin.payment.urls', namespace='payment')),
 ]
 
 if settings.DEFAULT_FILE_STORAGE == 'django.core.files.storage.FileSystemStorage':
