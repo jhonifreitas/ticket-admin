@@ -74,10 +74,12 @@ class HomeView(BaseView):
         query_user = ProfileUser.objects.filter(profile__user=user)
         context = {
             'clients': Profile.objects.filter(user=user).count(),
+            'users': ProfileUser.objects.filter(profile__user=user).count(),
             'users_active': query_user.filter(status=ProfileUser.ACTIVE).count(),
             'users_waiting': query_user.filter(status=ProfileUser.WAITING).count(),
             'users_expired': query_user.filter(status=ProfileUser.EXPIRED).count(),
-            'billing': ProfileUser.objects.get_billing(user)
+            'billing': ProfileUser.objects.get_billing(user),
+            'billing_liquid': ProfileUser.objects.get_billing_liquid(user)
         }
         if user.has_perm('billet.list_billet'):
             context['billets_wainting'] = Billet.objects.filter(
@@ -87,7 +89,7 @@ class HomeView(BaseView):
                 profile__user=user).count()
             context['billets_canceled'] = Billet.objects.filter(
                 profile__user=user, status=Billet.CANCELED).count()
-            context['billingBillet'] = Billet.objects.get_billing(user)
+            context['billing_billet'] = Billet.objects.get_billing(user)
         return context
 
     def get(self, request):

@@ -17,11 +17,14 @@
             <div class="col-md-6">
               {% include 'core/components/field.html' with field=form.types %}
             </div>
-            <div class="col-md-6">
+            <div class="col-md-4">
               {% include 'core/components/field.html' with field=form.agency %}
             </div>
-            <div class="col-md-6">
+            <div class="col-md-4">
               {% include 'core/components/field.html' with field=form.account class='mask-account' %}
+            </div>
+            <div class="col-md-4">
+              {% include 'core/components/field.html' with field=form.operation %}
             </div>
             <div class="col-md-6">
               {% include 'core/components/field.html' with field=form.fullname %}

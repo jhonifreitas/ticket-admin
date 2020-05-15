@@ -13,19 +13,33 @@
           <div class="icon pr-2">
             <i class="fas fa-users text-aqua"></i>
           </div>
-          <a href="#" class="small-box-footer bg-aqua"></a>
+          <span class="small-box-footer bg-aqua"></span>
         </div>
       </div>
       <div class="col">
         <div class="small-box bg-white shadow-1">
           <div class="inner px-3 py-3">
-            <h3 class="text-dark">{{ users_expired }}</h3>
-            <p class="text-dark">Usuários Vencidos</p>
+            <h3 class="text-dark">{{ users }}</h3>
+            <p class="text-dark">Usuários</p>
           </div>
           <div class="icon pr-2">
-            <i class="fas fa-users text-danger"></i>
+            <i class="fas fa-users text-info"></i>
           </div>
-          <a href="#" class="small-box-footer bg-danger"></a>
+          <span class="small-box-footer bg-info"></span>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col">
+        <div class="small-box bg-white shadow-1">
+          <div class="inner px-3 py-3">
+            <h3 class="text-dark">{{ users_active }}</h3>
+            <p class="text-dark">Usuários Ativos</p>
+          </div>
+          <div class="icon pr-2">
+            <i class="fas fa-user-check text-success"></i>
+          </div>
+          <span class="small-box-footer bg-success"></span>
         </div>
       </div>
       <div class="col">
@@ -35,21 +49,21 @@
             <p class="text-dark">Usuários agurdando pagamento</p>
           </div>
           <div class="icon pr-2">
-            <i class="fas fa-users text-warning"></i>
+            <i class="fas fa-user-clock text-warning"></i>
           </div>
-          <a href="#" class="small-box-footer bg-warning"></a>
+          <span class="small-box-footer bg-warning"></span>
         </div>
       </div>
       <div class="col">
         <div class="small-box bg-white shadow-1">
           <div class="inner px-3 py-3">
-            <h3 class="text-dark">{{ users_active }}</h3>
-            <p class="text-dark">Usuários Ativos</p>
+            <h3 class="text-dark">{{ users_expired }}</h3>
+            <p class="text-dark">Usuários Vencidos</p>
           </div>
           <div class="icon pr-2">
-            <i class="fas fa-users text-success"></i>
+            <i class="fas fa-user-times text-danger"></i>
           </div>
-          <a href="#" class="small-box-footer bg-success"></a>
+          <span class="small-box-footer bg-danger"></span>
         </div>
       </div>
     </div>
@@ -58,25 +72,25 @@
         <div class="col">
           <div class="small-box bg-white shadow-1">
             <div class="inner px-3 py-3">
-              <h3 class="text-dark">{{ billets_wainting }}</h3>
-              <p class="text-dark">Boletos Pendentes</p>
+              <h3 class="text-dark">{{ billets_debited }}</h3>
+              <p class="text-dark">Boletos Pagos</p>
             </div>
             <div class="icon pr-2">
-              <i class="fas fa-user-clock text-yellow"></i>
+              <i class="fas fa-barcode text-green"></i>
             </div>
-            <a href="#" class="small-box-footer bg-yellow"></a>
+            <span class="small-box-footer bg-green"></span>
           </div>
         </div>
         <div class="col">
           <div class="small-box bg-white shadow-1">
             <div class="inner px-3 py-3">
-              <h3 class="text-dark">{{ billets_debited }}</h3>
-              <p class="text-dark">Boletos Pagos</p>
+              <h3 class="text-dark">{{ billets_wainting }}</h3>
+              <p class="text-dark">Boletos Pendentes</p>
             </div>
             <div class="icon pr-2">
-              <i class="fas fa-user-check text-green"></i>
+              <i class="fas fa-barcode text-yellow"></i>
             </div>
-            <a href="#" class="small-box-footer bg-green"></a>
+            <span class="small-box-footer bg-yellow"></span>
           </div>
         </div>
         <div class="col">
@@ -86,36 +100,45 @@
               <p class="text-dark">Boletos Cancelados</p>
             </div>
             <div class="icon pr-2">
-              <i class="fas fa-user-times text-red"></i>
+              <i class="fas fa-barcode text-red"></i>
             </div>
-            <a href="#" class="small-box-footer bg-red"></a>
+            <span class="small-box-footer bg-red"></span>
           </div>
         </div>
       </div>
     {% endif %}
-
-    <div class="box box-primary border-0 rounded-0 shadow-1">
-      <div class="box-header">
-        <div class="row align-items-center">
-          <div class="col-md-8">
-            <i class="fas fa-dollar-sign mr-2"></i>
-            <h3 class="box-title">Faturamento</h3>
+    <div class="row">
+      <div class="col">
+        <div class="small-box bg-white shadow-1">
+          <div class="inner px-3 py-3">
+            <h3 class="text-dark">R$ {{ billing }}</h3>
+            <p class="text-dark">Faturamento Bruto</p>
           </div>
+          <div class="icon pr-2">
+            <i class="fas fa-dollar-sign text-info"></i>
+          </div>
+          <span class="small-box-footer bg-info"></span>
         </div>
       </div>
-      <div class="box-body text-center px-0">
-        <canvas id="billingChart"></canvas>
+      <div class="col">
+        <div class="small-box bg-white shadow-1">
+          <div class="inner px-3 py-3">
+            <h3 class="text-dark">R$ {{ billing_liquid }}</h3>
+            <p class="text-dark">Faturamento Liquido</p>
+          </div>
+          <div class="icon pr-2">
+            <i class="fas fa-dollar-sign text-success"></i>
+          </div>
+          <span class="small-box-footer bg-success"></span>
+        </div>
       </div>
     </div>
+
     {% if perms.billet.list_billet %}
       <div class="box box-primary border-0 rounded-0 shadow-1">
         <div class="box-header">
-          <div class="row align-items-center">
-            <div class="col-md-8">
-              <i class="fas fa-dollar-sign mr-2"></i>
-              <h3 class="box-title">Faturamento dos boletos</h3>
-            </div>
-          </div>
+          <i class="fas fa-dollar-sign mr-2"></i>
+          <h3 class="box-title">Faturamento dos boletos</h3>
         </div>
         <div class="box-body text-center px-0">
           <canvas id="billingBilletChart"></canvas>
@@ -130,40 +153,22 @@
 {% endblock %}
 {% block js %}
   <script src="{% static 'plugins/chart/js/chart.min.js' %}"></script>
-  <script>
-    var labels = ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'];
-    var options = {
-      aspectRatio: 4,
-      legend: {
-        display: false
-      }
-    };
-    var data = {
-      labels: labels,
-      datasets: [
-        {
-          borderColor: '#3f4d67',
-          backgroundColor: 'rgba(63, 77, 103, .8)',
-          data: JSON.parse('{{ billing|safe }}')
-        },
-      ]
-    };
-    var canvas = $('#billingChart').get(0).getContext('2d');
-    var billingChart = new Chart(canvas, {
-      type: 'line',
-      data: data,
-      options: options
-    });
-  </script>
   {% if perms.billet.list_billet %}
     <script>
+      var labels = ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'];
+      var options = {
+        aspectRatio: 4,
+        legend: {
+          display: false
+        }
+      };
       var data = {
         labels: labels,
         datasets: [
           {
             borderColor: '#3f4d67',
             backgroundColor: 'rgba(63, 77, 103, .8)',
-            data: JSON.parse('{{ billingBillet|safe }}')
+            data: JSON.parse('{{ billing_billet|safe }}')
           },
         ]
       };
