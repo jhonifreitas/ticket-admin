@@ -65,7 +65,7 @@ class ProfileUserListView(views.BaseListView):
 
     model = models.ProfileUser
     template_name = 'profile/users/list.html'
-    permission_required = ['custom_profile.list_profile']
+    permission_required = ['custom_profile.list_profileuser']
 
     def get_queryset(self):
         object_list = super().get_queryset().filter(profile__uuid=self.kwargs.get('profile_uuid'))
@@ -90,7 +90,7 @@ class ProfileUserCreateView(views.BaseCreateView):
     form_class = forms.ProfileUserForm
     template_name = 'profile/users/form.html'
     success_message = 'Usuário cadastrado!'
-    permission_required = ['custom_profile.add_profile']
+    permission_required = ['custom_profile.add_profileuser']
     initial = {
         'expiration': datetime.now().date()
     }
@@ -109,7 +109,7 @@ class ProfileUserUpdateView(views.BaseUpdateView):
     form_class = forms.ProfileUserForm
     template_name = 'profile/users/form.html'
     success_message = 'Usuário salvo!'
-    permission_required = ['custom_profile.change_profile']
+    permission_required = ['custom_profile.change_profileuser']
 
     def get_success_url(self):
         return reverse_lazy('profile:user-list', args=[self.kwargs.get('profile_uuid')])
@@ -120,7 +120,7 @@ class ProfileUserDeleteView(views.BaseDeleteView):
     model = models.ProfileUser
     template_name = 'profile/users/list.html'
     success_message = 'Usuário deletado!'
-    permission_required = ['custom_profile.delete_profile']
+    permission_required = ['custom_profile.delete_profileuser']
 
     def get_success_url(self):
         return reverse_lazy('profile:user-list', args=[self.kwargs.get('profile_uuid')])

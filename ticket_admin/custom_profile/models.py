@@ -47,8 +47,11 @@ class Profile(AbstractBaseModel):
 
     @property
     def get_total_amount(self):
-        return ProfileUser.objects.filter(
-            profile=self).values('profile').order_by('profile').annotate(total=Sum('value'))[0].get('total')
+        values = ProfileUser.objects.filter(
+            profile=self).values('profile').order_by('profile').annotate(total=Sum('value'))
+        if values:
+            return values[0].get('total')
+        return None
 
 
 class ProfileUser(AbstractBaseModel):
@@ -58,7 +61,7 @@ class ProfileUser(AbstractBaseModel):
         verbose_name_plural = 'Usuários'
         ordering = ['username', '-created_at']
         permissions = [
-            ('list_profile_user', 'Pode Listar Usuários do Perfil'),
+            ('list_profileuser', 'Pode Listar Usuários do Perfil'),
         ]
 
     objects = ProfileUserManager()

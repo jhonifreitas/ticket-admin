@@ -47,7 +47,7 @@
                   <td class="align-middle">{{ object.observation|default:'----' }}</td>
                   <td>
                     {% if perms.billet.list_billet and object.cpf and object.email %}
-                      <a href="{% url 'billet:create' %}?profile={{ object.uuid }}&amount={{ object.get_total_amount|unlocalize }}" class="btn btn-outline-info" title="Gerar Boleto"><i class="fas fa-file"></i></a>
+                      <a href="{% url 'billet:create' %}?profile={{ object.uuid }}{% if object.get_total_amount %}&amount={{ object.get_total_amount|unlocalize }}{% endif %}" class="btn btn-outline-info" title="Gerar Boleto"><i class="fas fa-file"></i></a>
                     {% endif %}
                     <a href="{% url 'profile:user-list' object.uuid %}" class="btn btn-outline-dark" title="Usuários"><i class="fas fa-users"></i></a>
                     <a href="{% url 'profile:update' object.uuid %}" class="btn btn-outline-success" title="Editar"><i class="fas fa-edit"></i></a>

@@ -59,7 +59,7 @@
                   </td>
                 </tr>
               {% empty %}
-                <tr><td colspan="6" class="text-center">Nenhum registro encontrado!</td></tr>
+                <tr><td colspan="9" class="text-center">Nenhum registro encontrado!</td></tr>
               {% endfor %}
             </tbody>
           </table>
@@ -76,7 +76,7 @@
 {% endblock %}
 {% block modal %}
   {% for object in object_list %}
-    {% url 'profile:user-delete' object.uuid as url_delete %}
+    {% url 'profile:user-delete' profile.uuid object.uuid as url_delete %}
 
     {% include 'core/components/modal_confirm.html' with uuid=object.uuid url=url_delete %}
   {% endfor %}
