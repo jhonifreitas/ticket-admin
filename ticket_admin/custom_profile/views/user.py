@@ -17,7 +17,7 @@ class ProfileUserListView(views.BaseListView):
         return self.request.GET.get('profile')
 
     def get_queryset(self):
-        object_list = super().get_queryset()
+        object_list = super().get_queryset().filter(profile__user=self.request.user)
         if self.get_profile_uuid():
             object_list = object_list.filter(profile__uuid=self.get_profile_uuid())
 
