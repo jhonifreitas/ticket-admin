@@ -13,12 +13,10 @@ class ProfileUserManager(Manager):
             return result
         return 0
 
-    def get_billing_liquid(self, user):
-        user_total = self.filter(
-            profile__user=user).exclude(status=models.ProfileUser.EXPIRED).aggregate(total=Sum('value')).get('total')
-        panel_total = self.filter(
+    def get_credit_costs(self, user):
+        result = self.filter(
             profile__user=user).exclude(
                 status=models.ProfileUser.EXPIRED).aggregate(total=Sum('panel__value')).get('total')
-        if user_total and panel_total:
-            return user_total - panel_total
+        if result:
+            return result
         return 0
