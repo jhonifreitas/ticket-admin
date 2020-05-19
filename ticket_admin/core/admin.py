@@ -7,6 +7,7 @@ class TutorialInline(admin.TabularInline):
 
     model = models.TutorialImage
     exclude = ['deleted_at']
+    extra = 1
 
 
 @admin.register(models.Config)
