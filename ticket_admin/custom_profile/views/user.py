@@ -26,7 +26,9 @@ class ProfileUserListView(views.BaseListView):
             object_list = object_list.filter(
                 Q(username__icontains=text_filter) |
                 Q(password__icontains=text_filter) |
+                Q(profile__name__icontains=text_filter) |
                 Q(panel__name__icontains=text_filter) |
+                Q(observation__icontains=text_filter) |
                 Q(status__icontains=text_filter))
         return object_list
 

@@ -59,7 +59,7 @@ class ProfileUser(AbstractBaseModel):
     class Meta:
         verbose_name = 'Usuário'
         verbose_name_plural = 'Usuários'
-        ordering = ['username', '-created_at']
+        ordering = ['expiration', '-created_at']
         permissions = [
             ('list_profileuser', 'Pode Listar Usuários do Perfil'),
         ]

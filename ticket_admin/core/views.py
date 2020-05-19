@@ -35,7 +35,7 @@ class BaseView(PermissionRequiredMixin, SuccessMessageMixin, View):
 
 class BaseListView(BaseView, ListView):
 
-    paginate_by = 10
+    paginate_by = 50
 
     def get_queryset(self):
         paginate_by = self.request.GET.get('paginate_by')

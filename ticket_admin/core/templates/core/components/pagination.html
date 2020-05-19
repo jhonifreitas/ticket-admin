@@ -41,9 +41,7 @@
     </div>
     <div class="col-12 col-md mt-3 text-md-right">
       <select name="paginate_by" class="form-control col-md-4 text-center ml-auto">
-        <option value="10">10</option>
-        <option value="20" {% if request.GET.paginate_by == '20' %}selected{% endif %}>20</option>
-        <option value="50" {% if request.GET.paginate_by == '50' %}selected{% endif %}>50</option>
+        <option value="50">50</option>
         <option value="100" {% if request.GET.paginate_by == '100' %}selected{% endif %}>100</option>
         <option value="200" {% if request.GET.paginate_by == '200' %}selected{% endif %}>200</option>
         <option value="300" {% if request.GET.paginate_by == '300' %}selected{% endif %}>300</option>
