@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% load staticfiles %}
+{% load staticfiles humanize %}
 
 {% block content %}
   <section class="content">
@@ -111,7 +111,7 @@
       <div class="col">
         <div class="small-box bg-white shadow-1">
           <div class="inner px-3 py-3">
-            <h3 class="text-dark">R$ {{ billing }}</h3>
+            <h3 class="text-dark">R$ {{ billing|intcomma }}</h3>
             <p class="text-dark">Faturamento Bruto</p>
           </div>
           <div class="icon pr-2">
@@ -123,7 +123,7 @@
       <div class="col">
         <div class="small-box bg-white shadow-1">
           <div class="inner px-3 py-3">
-            <h3 class="text-dark">R$ {{ billing_liquid }}</h3>
+            <h3 class="text-dark">R$ {{ billing_liquid|intcomma }}</h3>
             <p class="text-dark">Faturamento Liquido</p>
           </div>
           <div class="icon pr-2">
