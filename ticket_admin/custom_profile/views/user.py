@@ -22,6 +22,7 @@ class ProfileUserListView(views.BaseListView):
             object_list = object_list.filter(profile__uuid=self.get_profile_uuid())
 
         text_filter = self.request.GET.get('q')
+        status_filter = self.request.GET.get('status')
         if text_filter:
             object_list = object_list.filter(
                 Q(username__icontains=text_filter) |
@@ -30,6 +31,8 @@ class ProfileUserListView(views.BaseListView):
                 Q(panel__name__icontains=text_filter) |
                 Q(observation__icontains=text_filter) |
                 Q(status__icontains=text_filter))
+        if status_filter:
+            object_list = object_list.filter(status=status_filter)
         return object_list
 
     def get_context_data(self, *args, **kwargs):
