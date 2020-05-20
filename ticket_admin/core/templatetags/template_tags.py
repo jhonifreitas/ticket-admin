@@ -66,11 +66,17 @@ def get_user_color_status(user):
 @register.filter('get_whats_message')
 def get_whats_message(user):
     message = 'Olá!%0a'
-    message += 'Seu sinal irá vencer dia *{}*%0a'.format(user.expiration.strftime('%d/%m/%Y'))
-    message += 'O valor do pagamento é de *R$ {}*%0a'.format(str(user.value).replace('.', ','))
-    message += 'Por favor, renove antes do corte de sinal.%0a%0a'
+    if ProfileUser.EXPIRED == user.status:
+        message += 'Seu sinal venceu dia *{}*%0a'.format(user.expiration.strftime('%d/%m/%Y'))
+        message += 'O valor do pagamento é de *R$ {}*%0a'.format(str(user.value).replace('.', ','))
+        message += 'Por favor, efetue o pagamento o volte a usar o canais.'
+    else:
+        message += 'Seu sinal irá vencer dia *{}*%0a'.format(user.expiration.strftime('%d/%m/%Y'))
+        message += 'O valor do pagamento é de *R$ {}*%0a'.format(str(user.value).replace('.', ','))
+        message += 'Por favor, renove antes do corte de sinal.'
+
     if user.profile.user.banks.count():
-        message += '*Bancos para Depósito/Transferência*%0a'
+        message += '%0a%0a*Bancos para Depósito/Transferência*%0a'
         for bank in user.profile.user.banks.all():
             message += '*{}*%0a'.format(bank.name)
             message += 'Agência: {}%0a'.format(bank.agency)

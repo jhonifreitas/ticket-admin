@@ -50,6 +50,7 @@ class ProfileUserForm(forms.ModelForm):
         super().__init__(*args, **kwargs)
 
         if user:
+            self.fields.get('profile').label = 'Cliente'
             self.fields.get('panel').queryset = Panel.objects.filter(user=user)
             self.fields.get('profile').queryset = models.Profile.objects.filter(user=user)
 
