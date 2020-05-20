@@ -44,7 +44,9 @@
                 <tr>
                   <td class="align-middle text-left pl-4">{{ object.username }}</td>
                   <td class="align-middle">{{ object.password }}</td>
-                  {% if not profile %}<td class="align-middle">{{ object.profile }}</td>{% endif %}
+                  {% if not profile %}
+                    <td class="align-middle"><a href="{% url 'profile:update' object.profile.uuid %}">{{ object.profile }}</a></td>
+                  {% endif %}
                   <td class="align-middle">{{ object.panel }}</td>
                   <td class="align-middle">{{ object.points }}</td>
                   <td class="align-middle">R$ {{ object.value }}</td>
