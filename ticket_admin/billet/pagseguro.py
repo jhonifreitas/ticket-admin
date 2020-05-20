@@ -9,7 +9,7 @@ from django.urls import reverse_lazy
 class Pagseguro:
 
     url = 'https://ws.pagseguro.uol.com.br'
-    host = 'https://ticket-painel.herokuapp.com'
+    host = 'https://gringotv.com.br'
     notification_url = reverse_lazy('api.v1:notification')
 
     def xml_to_json(self, response):
