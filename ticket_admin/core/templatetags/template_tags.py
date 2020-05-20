@@ -69,11 +69,11 @@ def get_whats_message(user):
     if ProfileUser.EXPIRED == user.status:
         message += 'Seu sinal venceu dia *{}*%0a'.format(user.expiration.strftime('%d/%m/%Y'))
         message += 'O valor do pagamento é de *R$ {}*%0a'.format(str(user.value).replace('.', ','))
-        message += 'Por favor, efetue o pagamento o volte a usar o canais.'
+        message += 'Por favor, efetue o pagamento o volte a usar os canais.'
     else:
         message += 'Seu sinal irá vencer dia *{}*%0a'.format(user.expiration.strftime('%d/%m/%Y'))
         message += 'O valor do pagamento é de *R$ {}*%0a'.format(str(user.value).replace('.', ','))
-        message += 'Por favor, renove antes do corte de sinal.'
+        message += 'Por favor, evite o corte de sinal.'
 
     if user.profile.user.banks.count():
         message += '%0a%0a*Bancos para Depósito/Transferência*%0a'
