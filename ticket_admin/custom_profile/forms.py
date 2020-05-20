@@ -2,6 +2,7 @@ from django import forms
 from django.contrib.auth.forms import AuthenticationForm
 
 from ticket_admin.core import utils
+from ticket_admin.panel.models import Panel
 from ticket_admin.custom_profile import models
 
 
@@ -43,6 +44,14 @@ class ProfileUserForm(forms.ModelForm):
         }
 
     value = forms.CharField(label='Valor', max_length=10)
+
+    def __init__(self, *args, **kwargs):
+        user = kwargs.pop('user', None)
+        super().__init__(*args, **kwargs)
+
+        if user:
+            self.fields.get('panel').queryset = Panel.objects.filter(user=user)
+            self.fields.get('profile').queryset = models.Profile.objects.filter(user=user)
 
     def clean_value(self):
         value = self.cleaned_data.get('value')

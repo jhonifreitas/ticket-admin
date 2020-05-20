@@ -60,6 +60,11 @@ class ProfileUserCreateView(views.BaseCreateView):
     def get_profile(self):
         return get_object_or_404(models.Profile, uuid=self.get_profile_uuid())
 
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        kwargs.update({'user': self.request.user})
+        return kwargs
+
     def get_initial(self):
         initial = super().get_initial()
         if self.get_profile_uuid():
