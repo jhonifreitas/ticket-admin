@@ -1,6 +1,9 @@
 $(function(){
   var url = window.location.pathname;
-  $('.sidebar .sidebar-menu [href="'+url+'"]').parent().addClass('active');
+  $parent = $('.sidebar .sidebar-menu [href="'+url+'"]').parent();
+  $parent.addClass('active');
+  $parent.parents('.treeview-menu').slideDown('slow');
+  $parent.parents('.treeview').addClass('menu-open');
 
   $('.box-alerts .open').show().delay(5000).fadeOut('slow');
 
