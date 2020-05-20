@@ -20,7 +20,7 @@
         <div class="row">
           {% for image in object.images.all %}
             <div class="col-md-4">
-              <img src="{{ image.image.url }}" class="img-fluid" alt="">
+              <img src="{{ image.image.url }}" class="w-100 mb-2" alt="">
               {% if image.title %}<h4>{{ image.title }}</h4>{% endif %}
               {% if image.description %}<p>{{ image.description }}</p>{% endif %}
             </div>
