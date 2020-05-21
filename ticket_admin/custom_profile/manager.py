@@ -10,7 +10,7 @@ class ProfileUserManager(Manager):
         result = self.filter(
             profile__user=user).exclude(status=models.ProfileUser.EXPIRED).aggregate(total=Sum('value')).get('total')
         if result:
-            return result
+            return round(result, 2)
         return 0
 
     def get_credit_costs(self, user):
@@ -18,5 +18,5 @@ class ProfileUserManager(Manager):
             profile__user=user).exclude(
                 status=models.ProfileUser.EXPIRED).aggregate(total=Sum('panel__value')).get('total')
         if result:
-            return result
+            return round(result, 2)
         return 0

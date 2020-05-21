@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% load l10n template_tags %}
+{% load l10n template_tags humanize %}
 
 {% block content %}
   <section class="content">
@@ -49,7 +49,7 @@
                   {% endif %}
                   <td class="align-middle">{{ object.panel }}</td>
                   <td class="align-middle">{{ object.points }}</td>
-                  <td class="align-middle">R$ {{ object.value }}</td>
+                  <td class="align-middle">R$ {{ object.value|intcomma }}</td>
                   <td class="align-middle">{{ object.observation|default:'----' }}</td>
                   <td class="align-middle">{{ object.expiration|date:'d/m/Y' }}</td>
                   <td class="align-middle font-weight-bold text-{{ object|get_user_color_status }}">{{ object.get_status_display }}</td>

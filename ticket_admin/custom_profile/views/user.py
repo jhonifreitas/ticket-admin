@@ -1,4 +1,3 @@
-from datetime import datetime
 from django.db.models import Q
 from django.urls import reverse_lazy
 from django.shortcuts import get_object_or_404
@@ -50,9 +49,6 @@ class ProfileUserCreateView(views.BaseCreateView):
     template_name = 'profile/users/form.html'
     success_url = reverse_lazy('profile:user-list')
     permission_required = ['custom_profile.add_profileuser']
-    initial = {
-        'expiration': datetime.now().date()
-    }
 
     def get_profile_uuid(self):
         return self.request.GET.get('profile')

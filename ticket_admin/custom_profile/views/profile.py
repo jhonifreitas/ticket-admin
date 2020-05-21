@@ -1,4 +1,5 @@
 from django.db.models import Q
+from django.db import transaction
 from django.urls import reverse_lazy
 
 from ticket_admin.core import views
@@ -30,8 +31,22 @@ class ProfileCreateView(views.BaseCreateView):
     success_message = 'Usuário cadastrado!'
     permission_required = ['custom_profile.add_profile']
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['users'] = forms.ProfileUserFormSet(form_kwargs={'user': self.request.user})
+        if self.request.POST:
+            context['users'] = forms.ProfileUserFormSet(self.request.POST, form_kwargs={'user': self.request.user})
+        return context
+
     def form_valid(self, form):
         form.instance.user = self.request.user
+        context = self.get_context_data()
+        users = context.get('users')
+        with transaction.atomic():
+            self.object = form.save()
+            if users.is_valid():
+                users.instance = self.object
+                users.save()
         return super().form_valid(form)
 
 

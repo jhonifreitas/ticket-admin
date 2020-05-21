@@ -1,3 +1,5 @@
+from datetime import datetime
+
 from django import forms
 from django.contrib.auth.forms import AuthenticationForm
 
@@ -39,10 +41,8 @@ class ProfileUserForm(forms.ModelForm):
     class Meta:
         model = models.ProfileUser
         exclude = ['status', 'deleted_at']
-        widgets = {
-            'expiration': forms.HiddenInput()
-        }
 
+    expiration = forms.DateField(initial=datetime.now().date(), widget=forms.HiddenInput())
     value = forms.CharField(label='Valor', max_length=10)
 
     def __init__(self, *args, **kwargs):
@@ -57,3 +57,7 @@ class ProfileUserForm(forms.ModelForm):
     def clean_value(self):
         value = self.cleaned_data.get('value')
         return value.replace('.', '').replace(',', '.')
+
+
+ProfileUserFormSet = forms.inlineformset_factory(models.Profile, models.ProfileUser,
+                                                 form=ProfileUserForm, extra=3, max_num=3, can_delete=False)
