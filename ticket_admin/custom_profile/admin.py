@@ -18,15 +18,19 @@ class ProfileAdmin(admin.ModelAdmin):
     get_phone.short_description = 'Telefone'
 
     def get_email(self, obj):
-        part_one = obj.email[:3]
-        part_two = '*'*len(obj.email[3:])
-        return '{}{}'.format(part_one, part_two)
+        if obj.email:
+            part_one = obj.email[:3]
+            part_two = '*'*len(obj.email[3:])
+            return '{}{}'.format(part_one, part_two)
+        return '---'
     get_email.short_description = 'Email'
 
     def get_cpf(self, obj):
-        part_one = obj.cpf[:3]
-        part_two = '*'*len(obj.cpf[3:])
-        return '{}{}'.format(part_one, part_two)
+        if obj.cpf:
+            part_one = obj.cpf[:3]
+            part_two = '*'*len(obj.cpf[3:])
+            return '{}{}'.format(part_one, part_two)
+        return '---'
     get_cpf.short_description = 'CPF'
 
 
