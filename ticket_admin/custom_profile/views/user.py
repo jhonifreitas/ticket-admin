@@ -88,6 +88,11 @@ class ProfileUserUpdateView(views.BaseUpdateView):
     success_url = reverse_lazy('profile:user-list')
     permission_required = ['custom_profile.change_profileuser']
 
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        kwargs.update({'user': self.request.user})
+        return kwargs
+
     def get_success_url(self):
         url = super().get_success_url()
         profile_uuid = self.request.GET.get('profile')
