@@ -54,7 +54,7 @@
                   <td class="align-middle">{{ object.expiration|date:'d/m/Y' }}</td>
                   <td class="align-middle font-weight-bold text-{{ object|get_user_color_status }}">{{ object.get_status_display }}</td>
                   <td>
-                    {% if perms.billet.list_billet and profile.cpf and profile.email %}
+                    {% if perms.billet.list_billet and object.profile.cpf and object.profile.email %}
                       <a href="{% url 'billet:create' %}?profile={{ profile.uuid }}&dueDate={{ object.expiration|date:'Y-m-d' }}&amount={{ object.value|unlocalize }}" class="btn btn-outline-info" title="Gerar Boleto"><i class="fas fa-file"></i></a>
                     {% endif %}
                     <a href="https://api.whatsapp.com/send?phone=55{{ object.profile.phone }}&text={{ object|get_whats_message }}" target="_blank" class="btn btn-outline-success"><i class="fab fa-whatsapp"></i></a>
