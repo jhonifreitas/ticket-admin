@@ -34,46 +34,48 @@
         </div>
       </div>
       {{ users.management_form }}
-      {% for form in users.forms %}
-        <div class="box box-primary border-0 rounded-0 shadow-1 {% if not forloop.first %}collapsed-box{% endif %}">
-          <div class="box-header">
-            <i class="fas fa-edit mr-2"></i>
-            <h3 class="box-title">Formulário de usuário</h3>
-            <div class="box-tools">
-              <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa {% if forloop.first %}fa-minus{% else %}fa-plus{% endif %}"></i></button>
+      {% if perms.custom_profile.list_profileuser %}
+        {% for form in users.forms %}
+          <div class="box box-primary border-0 rounded-0 shadow-1 {% if not forloop.first %}collapsed-box{% endif %}">
+            <div class="box-header">
+              <i class="fas fa-edit mr-2"></i>
+              <h3 class="box-title">Formulário de usuário</h3>
+              <div class="box-tools">
+                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa {% if forloop.first %}fa-minus{% else %}fa-plus{% endif %}"></i></button>
+              </div>
             </div>
-          </div>
-          <div class="box-body" {% if not forloop.first %}style="display: none;"{% endif %}>
-            {{ form.id }}
-            <div class="row">
-              <div class="col-md-8">
-                <div class="row">
-                  <div class="col-md-6">
-                    {% include 'core/components/field.html' with field=form.username %}
-                  </div>
-                  <div class="col-md-6">
-                    {% include 'core/components/field.html' with field=form.password %}
-                  </div>
-                  <div class="col-md-6">
-                    {% include 'core/components/field.html' with field=form.panel %}
-                  </div>
-                  <div class="col-md-6">
-                    {% include 'core/components/field.html' with field=form.value class='mask-money' %}
-                  </div>
-                  <div class="col-md-12">
-                    {% include 'core/components/field.html' with field=form.points %}
-                    {% include 'core/components/field.html' with field=form.observation %}
+            <div class="box-body" {% if not forloop.first %}style="display: none;"{% endif %}>
+              {{ form.id }}
+              <div class="row">
+                <div class="col-md-8">
+                  <div class="row">
+                    <div class="col-md-6">
+                      {% include 'core/components/field.html' with field=form.username %}
+                    </div>
+                    <div class="col-md-6">
+                      {% include 'core/components/field.html' with field=form.password %}
+                    </div>
+                    <div class="col-md-6">
+                      {% include 'core/components/field.html' with field=form.panel %}
+                    </div>
+                    <div class="col-md-6">
+                      {% include 'core/components/field.html' with field=form.value class='mask-money' %}
+                    </div>
+                    <div class="col-md-12">
+                      {% include 'core/components/field.html' with field=form.points %}
+                      {% include 'core/components/field.html' with field=form.observation %}
+                    </div>
                   </div>
                 </div>
-              </div>
-              <div class="col-md-4">
-                {{ form.expiration }}
-                <div class="datetimepicker"></div>
+                <div class="col-md-4">
+                  {{ form.expiration }}
+                  <div class="datetimepicker"></div>
+                </div>
               </div>
             </div>
           </div>
-        </div>
-      {% endfor %}
+        {% endfor %}
+      {% endif %}
       <button type="submit" class="btn btn-primary flat-right rounded-circle"><i class="fas fa-save"></i></button>
     </form>
   </section>

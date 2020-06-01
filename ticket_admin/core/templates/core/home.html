@@ -4,133 +4,147 @@
 {% block content %}
   <section class="content">
     <div class="row">
-      <div class="col">
-        <a href="{% url 'profile:list' %}">
-          <div class="small-box bg-white shadow-1">
-            <div class="inner px-3 py-3">
-              <h3 class="text-dark">{{ clients }}</h3>
-              <p class="text-dark">Clientes</p>
+      {% if perms.custom_profile.list_profile %}
+        <div class="col">
+          <a href="{% url 'profile:list' %}">
+            <div class="small-box bg-white shadow-1">
+              <div class="inner px-3 py-3">
+                <h3 class="text-dark">{{ clients }}</h3>
+                <p class="text-dark">Clientes</p>
+              </div>
+              <div class="icon pr-2">
+                <i class="fas fa-users text-aqua"></i>
+              </div>
+              <span class="small-box-footer bg-aqua"></span>
             </div>
-            <div class="icon pr-2">
-              <i class="fas fa-users text-aqua"></i>
+          </a>
+        </div>
+      {% endif %}
+      {% if perms.custom_profile.list_profileuser %}
+        <div class="col">
+          <a href="{% url 'profile:user-list' %}">
+            <div class="small-box bg-white shadow-1">
+              <div class="inner px-3 py-3">
+                <h3 class="text-dark">{{ users }}</h3>
+                <p class="text-dark">Usuários</p>
+              </div>
+              <div class="icon pr-2">
+                <i class="fas fa-users text-info"></i>
+              </div>
+              <span class="small-box-footer bg-info"></span>
             </div>
-            <span class="small-box-footer bg-aqua"></span>
-          </div>
-        </a>
-      </div>
-      <div class="col">
-        <a href="{% url 'profile:user-list' %}">
-          <div class="small-box bg-white shadow-1">
-            <div class="inner px-3 py-3">
-              <h3 class="text-dark">{{ users }}</h3>
-              <p class="text-dark">Usuários</p>
-            </div>
-            <div class="icon pr-2">
-              <i class="fas fa-users text-info"></i>
-            </div>
-            <span class="small-box-footer bg-info"></span>
-          </div>
-        </a>
-      </div>
+          </a>
+        </div>
+      {% endif %}
     </div>
-    <div class="row">
-      <div class="col">
-        <a href="{% url 'profile:user-list' %}?status=active">
-          <div class="small-box bg-white shadow-1">
-            <div class="inner px-3 py-3">
-              <h3 class="text-dark">{{ users_active }}</h3>
-              <p class="text-dark">Usuários Ativos</p>
+    {% if perms.custom_profile.list_profileuser %}
+      <div class="row">
+        <div class="col">
+          <a href="{% url 'profile:user-list' %}?status=active">
+            <div class="small-box bg-white shadow-1">
+              <div class="inner px-3 py-3">
+                <h3 class="text-dark">{{ users_active }}</h3>
+                <p class="text-dark">Usuários Ativos</p>
+              </div>
+              <div class="icon pr-2">
+                <i class="fas fa-user-check text-success"></i>
+              </div>
+              <span class="small-box-footer bg-success"></span>
             </div>
-            <div class="icon pr-2">
-              <i class="fas fa-user-check text-success"></i>
+          </a>
+        </div>
+        <div class="col">
+          <a href="{% url 'profile:user-list' %}?status=waiting_payment">
+            <div class="small-box bg-white shadow-1">
+              <div class="inner px-3 py-3">
+                <h3 class="text-dark">{{ users_waiting }}</h3>
+                <p class="text-dark">Usuários aguardando pagamento</p>
+              </div>
+              <div class="icon pr-2">
+                <i class="fas fa-user-clock text-warning"></i>
+              </div>
+              <span class="small-box-footer bg-warning"></span>
             </div>
-            <span class="small-box-footer bg-success"></span>
-          </div>
-        </a>
+          </a>
+        </div>
+        <div class="col">
+          <a href="{% url 'profile:user-list' %}?status=expired">
+            <div class="small-box bg-white shadow-1">
+              <div class="inner px-3 py-3">
+                <h3 class="text-dark">{{ users_expired }}</h3>
+                <p class="text-dark">Usuários Vencidos</p>
+              </div>
+              <div class="icon pr-2">
+                <i class="fas fa-user-times text-danger"></i>
+              </div>
+              <span class="small-box-footer bg-danger"></span>
+            </div>
+          </a>
+        </div>
       </div>
-      <div class="col">
-        <a href="{% url 'profile:user-list' %}?status=waiting_payment">
-          <div class="small-box bg-white shadow-1">
-            <div class="inner px-3 py-3">
-              <h3 class="text-dark">{{ users_waiting }}</h3>
-              <p class="text-dark">Usuários aguardando pagamento</p>
-            </div>
-            <div class="icon pr-2">
-              <i class="fas fa-user-clock text-warning"></i>
-            </div>
-            <span class="small-box-footer bg-warning"></span>
-          </div>
-        </a>
-      </div>
-      <div class="col">
-        <a href="{% url 'profile:user-list' %}?status=expired">
-          <div class="small-box bg-white shadow-1">
-            <div class="inner px-3 py-3">
-              <h3 class="text-dark">{{ users_expired }}</h3>
-              <p class="text-dark">Usuários Vencidos</p>
-            </div>
-            <div class="icon pr-2">
-              <i class="fas fa-user-times text-danger"></i>
-            </div>
-            <span class="small-box-footer bg-danger"></span>
-          </div>
-        </a>
-      </div>
-    </div>
+    {% endif %}
     {% if perms.billet.list_billet %}
       <div class="row">
         <div class="col">
-          <div class="small-box bg-white shadow-1">
-            <div class="inner px-3 py-3">
-              <h3 class="text-dark">{{ billets_debited }}</h3>
-              <p class="text-dark">Boletos Pagos</p>
+          <a href="{% url 'billet:list' %}?status=3">
+            <div class="small-box bg-white shadow-1">
+              <div class="inner px-3 py-3">
+                <h3 class="text-dark">{{ billets_debited }}</h3>
+                <p class="text-dark">Boletos Pagos</p>
+              </div>
+              <div class="icon pr-2">
+                <i class="fas fa-barcode text-green"></i>
+              </div>
+              <span class="small-box-footer bg-green"></span>
             </div>
-            <div class="icon pr-2">
-              <i class="fas fa-barcode text-green"></i>
-            </div>
-            <span class="small-box-footer bg-green"></span>
-          </div>
+          </a>
         </div>
         <div class="col">
-          <div class="small-box bg-white shadow-1">
-            <div class="inner px-3 py-3">
-              <h3 class="text-dark">{{ billets_wainting }}</h3>
-              <p class="text-dark">Boletos Pendentes</p>
+          <a href="{% url 'billet:list' %}?status=1">
+            <div class="small-box bg-white shadow-1">
+              <div class="inner px-3 py-3">
+                <h3 class="text-dark">{{ billets_wainting }}</h3>
+                <p class="text-dark">Boletos Pendentes</p>
+              </div>
+              <div class="icon pr-2">
+                <i class="fas fa-barcode text-yellow"></i>
+              </div>
+              <span class="small-box-footer bg-yellow"></span>
             </div>
-            <div class="icon pr-2">
-              <i class="fas fa-barcode text-yellow"></i>
-            </div>
-            <span class="small-box-footer bg-yellow"></span>
-          </div>
+          </a>
         </div>
         <div class="col">
-          <div class="small-box bg-white shadow-1">
-            <div class="inner px-3 py-3">
-              <h3 class="text-dark">{{ billets_canceled }}</h3>
-              <p class="text-dark">Boletos Cancelados</p>
+          <a href="{% url 'billet:list' %}?status=7">
+            <div class="small-box bg-white shadow-1">
+              <div class="inner px-3 py-3">
+                <h3 class="text-dark">{{ billets_canceled }}</h3>
+                <p class="text-dark">Boletos Cancelados</p>
+              </div>
+              <div class="icon pr-2">
+                <i class="fas fa-barcode text-red"></i>
+              </div>
+              <span class="small-box-footer bg-red"></span>
             </div>
-            <div class="icon pr-2">
-              <i class="fas fa-barcode text-red"></i>
-            </div>
-            <span class="small-box-footer bg-red"></span>
-          </div>
+          </a>
         </div>
       </div>
     {% endif %}
 
-    <div class="box box-primary border-0 rounded-0 shadow-1">
-      <div class="box-header">
-        <i class="fas fa-dollar-sign mr-2"></i>
-        <h3 class="box-title">Faturamento</h3>
-      </div>
-      <div class="box-body text-center px-0">
-        <div class="row justify-content-center">
-          <div class="col-md-6">
-            <canvas id="billingChart"></canvas>
+    {% if perms.custom_profile.list_profileuser %}
+      <div class="box box-primary border-0 rounded-0 shadow-1">
+        <div class="box-header">
+          <i class="fas fa-dollar-sign mr-2"></i>
+          <h3 class="box-title">Faturamento</h3>
+        </div>
+        <div class="box-body text-center px-0">
+          <div class="row justify-content-center">
+            <div class="col-md-6">
+              <canvas id="billingChart"></canvas>
+            </div>
           </div>
         </div>
       </div>
-    </div>
+    {% endif %}
 
     {% if perms.billet.list_billet %}
       <div class="box box-primary border-0 rounded-0 shadow-1">
@@ -151,49 +165,51 @@
 {% endblock %}
 {% block js %}
   <script src="{% static 'plugins/chart/js/chart.min.js' %}"></script>
-  <script>
-    var currency = new Intl.NumberFormat('pt-BR', {
-      style: 'currency',
-      currency: 'BRL',
-    });
-    var options = {
-      tooltips: {
-        callbacks: {
-          label: function(tooltipItem, data) {
-            var value = data.datasets[tooltipItem.datasetIndex].data[tooltipItem.index];
-            return currency.format(value);
+  {% if perms.custom_profile.list_profileuser %}
+    <script>
+      var currency = new Intl.NumberFormat('pt-BR', {
+        style: 'currency',
+        currency: 'BRL',
+      });
+      var options = {
+        tooltips: {
+          callbacks: {
+            label: function(tooltipItem, data) {
+              var value = data.datasets[tooltipItem.datasetIndex].data[tooltipItem.index];
+              return currency.format(value);
+            }
           }
         }
       }
-    }
-    var data = {
-      labels: [
-        'Faturamento Bruto',
-        'Custos de crédito',
-        'Faturamento Líquido',
-      ],
-      datasets: [
-        {
-          backgroundColor: [
-            'rgba(63, 77, 103, .8)',
-            'rgba(255, 193, 7, .8)',
-            'rgba(40, 167, 69, .8)',
-          ],
-          data: [
-            '{{ billing|unlocalize }}',
-            '{{ credit_cost|unlocalize }}',
-            '{{ billing_liquid|unlocalize }}'
-          ]
-        },
-      ]
-    };
-    var canvas = $('#billingChart').get(0).getContext('2d');
-    var billingChart = new Chart(canvas, {
-      type: 'doughnut',
-      data: data,
-      options: options
-    });
-  </script>
+      var data = {
+        labels: [
+          'Faturamento Bruto',
+          'Custos de crédito',
+          'Faturamento Líquido',
+        ],
+        datasets: [
+          {
+            backgroundColor: [
+              'rgba(63, 77, 103, .8)',
+              'rgba(255, 193, 7, .8)',
+              'rgba(40, 167, 69, .8)',
+            ],
+            data: [
+              '{{ billing|unlocalize }}',
+              '{{ credit_cost|unlocalize }}',
+              '{{ billing_liquid|unlocalize }}'
+            ]
+          },
+        ]
+      };
+      var canvas = $('#billingChart').get(0).getContext('2d');
+      var billingChart = new Chart(canvas, {
+        type: 'doughnut',
+        data: data,
+        options: options
+      });
+    </script>
+  {% endif %}
   {% if perms.billet.list_billet %}
     <script>
       var labels = ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'];

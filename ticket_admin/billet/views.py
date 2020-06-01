@@ -20,11 +20,14 @@ class BilletListView(views.BaseListView):
     def get_queryset(self):
         object_list = super().get_queryset().filter(profile__user__config=self.request.user.config)
         text_filter = self.request.GET.get('q')
+        status_filter = self.request.GET.get('status')
         if text_filter:
             object_list = object_list.filter(
                 Q(profile__name__icontains=text_filter) |
                 Q(profile__email__icontains=text_filter) |
                 Q(profile__phone__icontains=text_filter))
+        if status_filter:
+            object_list = object_list.filter(status=status_filter)
         return object_list
 
 

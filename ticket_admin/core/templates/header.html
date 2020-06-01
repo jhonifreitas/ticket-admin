@@ -30,24 +30,42 @@
     <ul class="sidebar-menu" data-widget="tree">
       <li class="header text-uppercase text-white">Menu</li>
       <li><a href="{% url 'core:home' %}"><i class="fas fa-home mr-2"></i><span>Início</span></a></li>
-      <li class="treeview">
-        <a href="#">
-          <i class="fas fa-users mr-2"></i><span>Clientes</span>
-          <span class="pull-right-container">
-            <i class="fa fa-angle-left pull-right"></i>
-          </span>
-        </a>
-        <ul class="treeview-menu">
-          <li><a href="{% url 'profile:list' %}"><i class="fas fa-users mr-2"></i><span>Clientes</span></a></li>
-          <li><a href="{% url 'profile:user-list' %}"><i class="fas fa-user mr-2"></i><span>Usuários</span></a></li>
-          {% if perms.billet.list_billet %}<li><a href="{% url 'billet:list' %}"><i class="fas fa-barcode mr-2"></i><span>Boletos</span></a></li>{% endif %}
-        </ul>
-      </li>
-      <li><a href="{% url 'panel:list' %}"><i class="fas fa-tv mr-2"></i><span>Painéis</span></a></li>
-      <li><a href="{% url 'bank:list' %}"><i class="fas fa-university mr-2"></i><span>Bancos</span></a></li>
-      <li><a href="{% url 'core:list-tutorial' %}"><i class="fas fa-graduation-cap mr-2"></i><span>Tutoriais</span></a></li>
-      <li><a href="{% url 'payment:list' %}"><i class="fas fa-dollar-sign mr-2"></i><span>Pagamentos</span></a></li>
-      {% if perms.billet.list_billet %}<li><a href="{% url 'core:config' %}"><i class="fas fa-cogs mr-2"></i><span>Configurações</span></a></li>{% endif %}
+      {% if perms.custom_profile.list_profile or perms.custom_profile.list_profileuser or perms.billet.list_billet %}
+        <li class="treeview">
+          <a href="#">
+            <i class="fas fa-users mr-2"></i><span>Clientes</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+          </a>
+          <ul class="treeview-menu">
+            {% if perms.custom_profile.list_profile %}
+              <li><a href="{% url 'profile:list' %}"><i class="fas fa-users mr-2"></i><span>Clientes</span></a></li>
+            {% endif %}
+            {% if perms.custom_profile.list_profileuser %}
+              <li><a href="{% url 'profile:user-list' %}"><i class="fas fa-user mr-2"></i><span>Usuários</span></a></li>
+            {% endif %}
+            {% if perms.billet.list_billet %}
+              <li><a href="{% url 'billet:list' %}"><i class="fas fa-barcode mr-2"></i><span>Boletos</span></a></li>
+            {% endif %}
+          </ul>
+        </li>
+      {% endif %}
+      {% if perms.panel.list_panel %}
+        <li><a href="{% url 'panel:list' %}"><i class="fas fa-tv mr-2"></i><span>Painéis</span></a></li>
+      {% endif %}
+      {% if perms.bank.list_bank %}
+        <li><a href="{% url 'bank:list' %}"><i class="fas fa-university mr-2"></i><span>Bancos</span></a></li>
+      {% endif %}
+      {% if perms.core.list_tutorial %}
+        <li><a href="{% url 'core:list-tutorial' %}"><i class="fas fa-graduation-cap mr-2"></i><span>Tutoriais</span></a></li>
+      {% endif %}
+      {% if perms.payment.list_payment %}
+        <li><a href="{% url 'payment:list' %}"><i class="fas fa-dollar-sign mr-2"></i><span>Pagamentos</span></a></li>
+      {% endif %}
+      {% if perms.billet.list_billet %}
+        <li><a href="{% url 'core:config' %}"><i class="fas fa-cogs mr-2"></i><span>Configurações</span></a></li>
+      {% endif %}
     </ul>
   </section>
 </aside>

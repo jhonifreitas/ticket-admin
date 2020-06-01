@@ -49,7 +49,9 @@
                     {% if perms.billet.list_billet and object.cpf and object.email %}
                       <a href="{% url 'billet:create' %}?profile={{ object.uuid }}{% if object.get_total_amount %}&amount={{ object.get_total_amount|unlocalize }}{% endif %}" class="btn btn-outline-info" title="Gerar Boleto"><i class="fas fa-file"></i></a>
                     {% endif %}
-                    <a href="{% url 'profile:user-list' %}?profile={{ object.uuid }}" class="btn btn-outline-dark" title="Usuários"><i class="fas fa-users"></i></a>
+                    {% if perms.custom_profile.list_profileuser %}
+                      <a href="{% url 'profile:user-list' %}?profile={{ object.uuid }}" class="btn btn-outline-dark" title="Usuários"><i class="fas fa-users"></i></a>
+                    {% endif %}
                     <a href="{% url 'profile:update' object.uuid %}" class="btn btn-outline-success" title="Editar"><i class="fas fa-edit"></i></a>
                     <button type="button" data-toggle="modal" data-target="#confirm-{{ object.uuid }}" class="btn btn-outline-danger" title="Deletar"><i class="fas fa-trash"></i></button>
                   </td>
