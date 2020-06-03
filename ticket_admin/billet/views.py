@@ -41,6 +41,11 @@ class BilletCreateView(views.BaseCreateView):
     success_message = 'Boleto cadastrado!'
     permission_required = ['billet.add_billet']
 
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        kwargs.update({'user': self.request.user})
+        return kwargs
+
     def get_initial(self):
         initial = self.initial.copy()
         tomorrow = datetime.now().date() + timedelta(days=1)
