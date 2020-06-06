@@ -7,6 +7,7 @@ app_name = 'core'
 urlpatterns = [
     path('', views.HomeView.as_view(), name='home'),
     path('configuracao/', views.ConfigView.as_view(), name='config'),
+    path('redefinir-senha/', views.PasswordResetView.as_view(), name='password-reset'),
 
     # TUTORIAL
     path('tutorial/', views.TutorialView.as_view(), name='list-tutorial'),

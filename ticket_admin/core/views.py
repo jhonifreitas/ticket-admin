@@ -141,6 +141,32 @@ class ConfigView(BaseView):
         return render(request, self.template_name, context=context)
 
 
+class PasswordResetView(BaseView):
+
+    form_class = forms.PasswordResetForm
+    template_name = 'core/password-reset.html'
+    success_message = 'Senha redefinida! Faça o login com sua nova senha.'
+    success_url = reverse_lazy('core:home')
+
+    def get_context_data(self):
+        context = {'form': self.form_class(user=self.request.user)}
+        return context
+
+    def get(self, request):
+        return render(request, self.template_name, self.get_context_data())
+
+    def post(self, request):
+        context = self.get_context_data()
+        form = self.form_class(data=request.POST, user=self.request.user)
+
+        if form.is_valid():
+            form.save()
+            messages.success(request, self.success_message)
+            return redirect(self.success_url)
+        context['form'] = form
+        return render(request, self.template_name, context=context)
+
+
 class TutorialView(BaseListView):
 
     model = models.Tutorial

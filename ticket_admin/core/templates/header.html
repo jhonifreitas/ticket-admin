@@ -64,7 +64,18 @@
         <li><a href="{% url 'payment:list' %}"><i class="fas fa-dollar-sign mr-2"></i><span>Pagamentos</span></a></li>
       {% endif %}
       {% if perms.billet.list_billet %}
-        <li><a href="{% url 'core:config' %}"><i class="fas fa-cogs mr-2"></i><span>Configurações</span></a></li>
+        <li class="treeview">
+          <a href="#">
+            <i class="fas fa-cogs mr-2"></i><span>Configurações</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+          </a>
+          <ul class="treeview-menu">
+            <li><a href="{% url 'core:config' %}"><i class="fas fa-barcode mr-2"></i><span>Boleto</span></a></li>
+            <li><a href="{% url 'core:password-reset' %}"><i class="fas fa-key mr-2"></i><span>Redefinir senha</span></a></li>
+          </ul>
+        </li>
       {% endif %}
     </ul>
   </section>
