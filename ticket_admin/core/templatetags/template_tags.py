@@ -76,9 +76,9 @@ def get_whats_message(user):
         message += 'Por favor, evite o corte de sinal.'
 
     if user.profile.user.banks.count():
-        message += '%0a%0a*Bancos para Depósito/Transferência*%0a'
+        message += '%0a%0a*Bancos para Depósito/Transferência*'
         for bank in user.profile.user.banks.all():
-            message += '*{}*%0a'.format(bank.name)
+            message += '%0a*{}*%0a'.format(bank.name)
             message += 'Agência: {}%0a'.format(bank.agency)
             message += 'Conta: {}%0a'.format(bank.account)
             message += '{}%0a'.format(bank.get_types_display())
