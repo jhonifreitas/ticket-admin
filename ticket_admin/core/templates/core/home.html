@@ -131,17 +131,48 @@
     {% endif %}
 
     {% if perms.custom_profile.list_profileuser %}
-      <div class="box box-primary border-0 rounded-0 shadow-1">
-        <div class="box-header">
-          <i class="fas fa-dollar-sign mr-2"></i>
-          <h3 class="box-title">Faturamento</h3>
-        </div>
-        <div class="box-body text-center px-0">
-          <div class="row justify-content-center">
-            <div class="col-md-6">
-              <canvas id="billingChart"></canvas>
+      <div class="row">
+        <div class="col">
+          <a href="{% url 'billet:list' %}?status=3">
+            <div class="small-box bg-white shadow-1">
+              <div class="inner px-3 py-3">
+                <h3 class="text-dark">R$ {{ billing }}</h3>
+                <p class="text-dark">Faturamento Bruto</p>
+              </div>
+              <div class="icon pr-2">
+                <i class="fas fa-dollar-sign text-info"></i>
+              </div>
+              <span class="small-box-footer bg-info"></span>
             </div>
-          </div>
+          </a>
+        </div>
+        <div class="col">
+          <a href="{% url 'billet:list' %}?status=1">
+            <div class="small-box bg-white shadow-1">
+              <div class="inner px-3 py-3">
+                <h3 class="text-dark">R$ {{ credit_cost }}</h3>
+                <p class="text-dark">Custos de crédito</p>
+              </div>
+              <div class="icon pr-2">
+                <i class="fas fa-dollar-sign text-warning"></i>
+              </div>
+              <span class="small-box-footer bg-warning"></span>
+            </div>
+          </a>
+        </div>
+        <div class="col">
+          <a href="{% url 'billet:list' %}?status=7">
+            <div class="small-box bg-white shadow-1">
+              <div class="inner px-3 py-3">
+                <h3 class="text-dark">R$ {{ billing_liquid }}</h3>
+                <p class="text-dark">Faturamento Líquido</p>
+              </div>
+              <div class="icon pr-2">
+                <i class="fas fa-dollar-sign text-green"></i>
+              </div>
+              <span class="small-box-footer bg-green"></span>
+            </div>
+          </a>
         </div>
       </div>
     {% endif %}
@@ -165,51 +196,6 @@
 {% endblock %}
 {% block js %}
   <script src="{% static 'plugins/chart/js/chart.min.js' %}"></script>
-  {% if perms.custom_profile.list_profileuser %}
-    <script>
-      var currency = new Intl.NumberFormat('pt-BR', {
-        style: 'currency',
-        currency: 'BRL',
-      });
-      var options = {
-        tooltips: {
-          callbacks: {
-            label: function(tooltipItem, data) {
-              var value = data.datasets[tooltipItem.datasetIndex].data[tooltipItem.index];
-              return currency.format(value);
-            }
-          }
-        }
-      }
-      var data = {
-        labels: [
-          'Faturamento Bruto',
-          'Custos de crédito',
-          'Faturamento Líquido',
-        ],
-        datasets: [
-          {
-            backgroundColor: [
-              'rgba(63, 77, 103, .8)',
-              'rgba(255, 193, 7, .8)',
-              'rgba(40, 167, 69, .8)',
-            ],
-            data: [
-              '{{ billing|unlocalize }}',
-              '{{ credit_cost|unlocalize }}',
-              '{{ billing_liquid|unlocalize }}'
-            ]
-          },
-        ]
-      };
-      var canvas = $('#billingChart').get(0).getContext('2d');
-      var billingChart = new Chart(canvas, {
-        type: 'doughnut',
-        data: data,
-        options: options
-      });
-    </script>
-  {% endif %}
   {% if perms.billet.list_billet %}
     <script>
       var labels = ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'];
