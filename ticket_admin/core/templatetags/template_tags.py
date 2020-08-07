@@ -87,5 +87,6 @@ def get_whats_message(user):
             if bank.operation:
                 message += 'Operação: {}%0a'.format(bank.operation)
             message += '{}%0a'.format(bank.fullname)
-            message += 'CPF: {}'.format(bank.get_cpf_formated)
+            if bank.cpf:
+                message += 'CPF: {}'.format(bank.get_cpf_formated)
     return message

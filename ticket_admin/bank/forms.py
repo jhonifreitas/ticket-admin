@@ -10,7 +10,7 @@ class BankForm(forms.ModelForm):
         model = models.Bank
         exclude = ['user', 'deleted_at']
 
-    cpf = forms.CharField(label='CPF', max_length=14)
+    cpf = forms.CharField(label='CPF', max_length=14, required=False)
 
     def clean_cpf(self):
         cpf = CPF(self.cleaned_data.get('cpf'))

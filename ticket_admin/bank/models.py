@@ -31,7 +31,7 @@ class Bank(AbstractBaseModel):
     account = models.CharField(verbose_name='Conta com digito', max_length=255)
     fullname = models.CharField(verbose_name='Nome Completo', max_length=255)
     types = models.CharField(verbose_name='Tipo', max_length=255, choices=TYPES)
-    cpf = models.CharField(verbose_name='CPF', max_length=11)
+    cpf = models.CharField(verbose_name='CPF', max_length=11, null=True, blank=True)
     operation = models.CharField(verbose_name='Operação', max_length=255, null=True, blank=True)
 
     @property
