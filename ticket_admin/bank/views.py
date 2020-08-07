@@ -37,7 +37,7 @@ class BankUpdateView(views.BaseUpdateView):
     model = models.Bank
     form_class = forms.BankForm
     template_name = 'bank/form.html'
-    success_url = reverse_lazy('panel:list')
+    success_url = reverse_lazy('bank:list')
     success_message = 'Banco salvo!'
     permission_required = ['bank.change_bank']
 

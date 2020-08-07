@@ -13,7 +13,10 @@ class BankForm(forms.ModelForm):
     cpf = forms.CharField(label='CPF', max_length=14, required=False)
 
     def clean_cpf(self):
-        cpf = CPF(self.cleaned_data.get('cpf'))
-        if not cpf.validate():
-            raise forms.ValidationError('CPF inválido!')
-        return cpf.cleaning()
+        value = self.cleaned_data.get('cpf')
+        if value:
+            cpf = CPF(value)
+            if not cpf.validate():
+                raise forms.ValidationError('CPF inválido!')
+            return cpf.cleaning()
+        return value

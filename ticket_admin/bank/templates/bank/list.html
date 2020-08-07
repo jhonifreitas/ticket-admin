@@ -44,7 +44,7 @@
                   <td class="align-middle">{{ object.agency }}</td>
                   <td class="align-middle">{{ object.account }}</td>
                   <td class="align-middle">{{ object.fullname }}</td>
-                  <td class="align-middle">{{ object.get_cpf_formated }}</td>
+                  <td class="align-middle">{{ object.get_cpf_formated|default:'----' }}</td>
                   <td>
                     <a href="{% url 'bank:update' object.uuid %}" class="btn btn-outline-success" title="Editar"><i class="fas fa-edit"></i></a>
                     <button type="button" data-toggle="modal" data-target="#confirm-{{ object.uuid }}" class="btn btn-outline-danger" title="Deletar"><i class="fas fa-trash"></i></button>
