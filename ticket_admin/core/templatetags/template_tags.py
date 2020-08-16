@@ -41,16 +41,10 @@ def get_user_color_status(user):
 
     if user.expiration < datetime.now().date():
         status = ProfileUser.EXPIRED
-        user.status = status
-        user.save()
     elif user.expiration <= ten:
         status = ProfileUser.WAITING
-        user.status = status
-        user.save()
     else:
         status = ProfileUser.ACTIVE
-        user.status = status
-        user.save()
 
     if ProfileUser.WAITING == status:
         color = 'warning'

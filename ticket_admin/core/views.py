@@ -1,3 +1,5 @@
+from datetime import datetime, timedelta
+
 from django.views import View
 from django.db.models import Q
 from django.contrib import messages
@@ -104,6 +106,18 @@ class HomeView(BaseView):
         return context
 
     def get(self, request):
+        query_user = ProfileUser.objects.filter(profile__user=self.request.user)
+        now = datetime.now().date()
+        ten = now + timedelta(days=10)
+        for user in query_user:
+            if user.expiration < now:
+                status = ProfileUser.EXPIRED
+            elif user.expiration <= ten:
+                status = ProfileUser.WAITING
+            else:
+                status = ProfileUser.ACTIVE
+            user.status = status
+            user.save()
         return render(request, self.template_name, self.get_context_data())
 
 
