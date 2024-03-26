@@ -27,10 +27,11 @@ class Bank(AbstractBaseModel):
 
     user = models.ForeignKey(User, verbose_name='Usuário', on_delete=models.CASCADE, related_name='banks')
     name = models.CharField(verbose_name='Nome do banco', max_length=255)
-    agency = models.CharField(verbose_name='Agencia', max_length=255)
-    account = models.CharField(verbose_name='Conta com digito', max_length=255)
     fullname = models.CharField(verbose_name='Nome Completo', max_length=255)
-    types = models.CharField(verbose_name='Tipo', max_length=255, choices=TYPES)
+    pix = models.CharField(verbose_name='Pix', max_length=255, null=True, blank=True)
+    agency = models.CharField(verbose_name='Agencia', max_length=255, null=True, blank=True)
+    account = models.CharField(verbose_name='Conta com digito', max_length=255, null=True, blank=True)
+    types = models.CharField(verbose_name='Tipo', max_length=255, choices=TYPES, null=True, blank=True)
     cpf = models.CharField(verbose_name='CPF', max_length=11, null=True, blank=True)
     operation = models.CharField(verbose_name='Operação', max_length=255, null=True, blank=True)
 

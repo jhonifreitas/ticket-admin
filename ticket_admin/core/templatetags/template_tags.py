@@ -75,12 +75,17 @@ def get_whats_message(user):
             if i != 0:
                 message += '%0a'
             message += '%0a*{}*%0a'.format(bank.name)
-            message += 'Agência: {}%0a'.format(bank.agency)
-            message += 'Conta: {}%0a'.format(bank.account)
-            message += '{}%0a'.format(bank.get_types_display())
+            message += '{}%0a'.format(bank.fullname)
+            if bank.pix:
+                message += 'Pix: {}%0a'.format(bank.pix)
+            if bank.agency:
+                message += 'Agência: {}%0a'.format(bank.agency)
+            if bank.account:
+                message += 'Conta: {}%0a'.format(bank.account)
+            if bank.types:
+                message += '{}%0a'.format(bank.get_types_display())
             if bank.operation:
                 message += 'Operação: {}%0a'.format(bank.operation)
-            message += '{}%0a'.format(bank.fullname)
             if bank.cpf:
                 message += 'CPF: {}'.format(bank.get_cpf_formated)
     return message
