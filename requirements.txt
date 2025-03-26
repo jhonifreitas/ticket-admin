@@ -19,7 +19,7 @@ pytz
 https://github.com/darklow/django-suit/tarball/v2
 
 # Auditlog
-git+https://github.com/cosmunsoftwares/django-auditlog.git
+https://github.com/cosmunsoftwares/django-auditlog/tarball/master
 
 # Django Tests
 django-test-without-migrations
